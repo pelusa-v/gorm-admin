@@ -4,5 +4,12 @@ import "gorm.io/gorm"
 
 type User struct {
 	gorm.Model
-	Name string
+	Name  string
+	Email string
+}
+
+type Product struct {
+	Id    uint
+	Name  string
+	Email string
 }
