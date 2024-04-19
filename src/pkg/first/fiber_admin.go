@@ -3,6 +3,7 @@ package first
 import (
 	"bytes"
 	"embed"
+	"fmt"
 	"html/template"
 
 	"github.com/gofiber/fiber/v2"
@@ -20,13 +21,33 @@ func GenerateAdmin() *FiberAdmin {
 	return new(FiberAdmin)
 }
 
-func (admin *FiberAdmin) RegisterApp(app *fiber.App) {
+type SimpleAdmin struct {
+	Handler AppHandler
+}
+
+type AppHandler interface {
+	Register()
+}
+
+type FiberHandler struct {
+	App *fiber.App
+}
+
+type BuiltInHandler struct {
+	App *int
+}
+
+type GinHandler struct {
+	App *string
+}
+
+func (handler *FiberHandler) Register() {
 	tmpl, err := template.ParseFS(homeHTML, "templates/home.html")
 	if err != nil {
 		panic(err)
 	}
 
-	app.Get("/admin", func(c *fiber.Ctx) error {
+	handler.App.Get("/admin", func(c *fiber.Ctx) error {
 
 		// Send the HTML content as the response
 		var tmplOutput bytes.Buffer
@@ -38,15 +59,13 @@ func (admin *FiberAdmin) RegisterApp(app *fiber.App) {
 		// Send the rendered HTML as the response
 		c.Set("Content-Type", "text/html")
 		return c.SendString(tmplOutput.String())
-
-		// tmpl := template.Must(template.ParseGlob("pkg/**/*.html"))
-
-		// var tmplOutput bytes.Buffer
-		// err := tmpl.ExecuteTemplate(&tmplOutput, "home.html", nil)
-		// if err != nil {
-		// 	return err
-		// }
-
-		// return c.SendString(tmplOutput.String())
 	})
+}
+
+func (handler *BuiltInHandler) Register() {
+	fmt.Println("Registering BuiltIn http app to admin")
+}
+
+func (handler *GinHandler) Register() {
+	fmt.Println("Registering Gin app to admin")
 }
