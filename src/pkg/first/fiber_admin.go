@@ -13,15 +13,7 @@ import (
 //go:embed home2.html
 var homeHTML embed.FS
 
-type FiberAdmin struct {
-	Framework string
-}
-
-func GenerateAdmin() *FiberAdmin {
-	return new(FiberAdmin)
-}
-
-type SimpleAdmin struct {
+type Admin struct {
 	Handler AppHandler
 }
 
@@ -34,7 +26,6 @@ type FiberHandler struct {
 }
 
 type BuiltInHandler struct {
-	App *int
 }
 
 type GinHandler struct {
@@ -42,6 +33,8 @@ type GinHandler struct {
 }
 
 func (handler *FiberHandler) Register() {
+	fmt.Println("Registering admin in Fiber app")
+
 	tmpl, err := template.ParseFS(homeHTML, "templates/home.html")
 	if err != nil {
 		panic(err)
@@ -63,9 +56,31 @@ func (handler *FiberHandler) Register() {
 }
 
 func (handler *BuiltInHandler) Register() {
-	fmt.Println("Registering BuiltIn http app to admin")
+	fmt.Println("Registering admin in BuiltIn http app")
 }
 
 func (handler *GinHandler) Register() {
-	fmt.Println("Registering Gin app to admin")
+	fmt.Println("Registering admin in Gin app")
+}
+
+func NewFiberAdmin(app *fiber.App) *Admin {
+	handler := &FiberHandler{App: app}
+	admin := &Admin{Handler: handler}
+	return admin
+}
+
+func NewGinAdmin(app *string) *Admin {
+	handler := &GinHandler{App: app}
+	admin := &Admin{Handler: handler}
+	return admin
+}
+
+func NewAdmin() *Admin {
+	handler := &BuiltInHandler{}
+	admin := &Admin{Handler: handler}
+	return admin
+}
+
+func (admin *Admin) Register() {
+	admin.Handler.Register()
 }

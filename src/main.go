@@ -8,10 +8,8 @@ import (
 func main() {
 	app := fiber.New()
 
-	handler := &first.FiberHandler{App: app}
-	admin := first.SimpleAdmin{Handler: handler}
-
-	admin.Handler.Register()
+	admin := first.NewFiberAdmin(app)
+	admin.Register()
 
 	// db := samples.NewDbInstance()
 	// samples.TestListHandler(db)
