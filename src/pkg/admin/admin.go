@@ -56,6 +56,6 @@ func (admin *Admin) Register() {
 }
 
 func (admin *Admin) RegisteModel(model any) {
-	modelType := reflect.TypeOf(model)
+	modelType := reflect.TypeOf(model) // Add models validation (validate that is a db model, validate against db)
 	admin.Handler.RegisterModel(modelType)
 }
