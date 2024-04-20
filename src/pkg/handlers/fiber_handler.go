@@ -13,10 +13,10 @@ import (
 type FiberHandler struct {
 	BaseHandler
 	App        *fiber.App
-	TestModels []string
+	TestModels []reflect.Type
 }
 
-func (handler *FiberHandler) RegisterModel(model string) {
+func (handler *FiberHandler) RegisterModel(model reflect.Type) {
 	handler.TestModels = append(handler.TestModels, model)
 }
 
@@ -35,6 +35,7 @@ func (handler *FiberHandler) RegisterHomePage(template *template.Template) {
 
 	handler.App.Get("/admin", func(c *fiber.Ctx) error {
 
+		// first := handler.TestModels[0].Name()
 		// Send the HTML content as the response
 		var tmplOutput bytes.Buffer
 		err := template.Execute(&tmplOutput, handler.TestModels)

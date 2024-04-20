@@ -2,13 +2,14 @@ package handlers
 
 import (
 	"embed"
+	"reflect"
 
 	"gorm.io/gorm"
 )
 
 type AppHandler interface {
 	Register()
-	RegisterModel(model string)
+	RegisterModel(model reflect.Type)
 }
 
 type BaseHandler struct {

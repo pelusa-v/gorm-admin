@@ -2,6 +2,7 @@ package admin
 
 import (
 	"embed"
+	"reflect"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/pelusa-v/gorm-admin/src/pkg/handlers"
@@ -54,6 +55,7 @@ func (admin *Admin) Register() {
 	admin.Handler.Register()
 }
 
-func (admin *Admin) RegisteModel(model string) {
-	admin.Handler.RegisterModel(model)
+func (admin *Admin) RegisteModel(model any) {
+	modelType := reflect.TypeOf(model)
+	admin.Handler.RegisterModel(modelType)
 }

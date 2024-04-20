@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/pelusa-v/gorm-admin/src/pkg/first"
+	"github.com/pelusa-v/gorm-admin/src/pkg/handlers"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -22,7 +22,7 @@ func NewDbInstance() *gorm.DB {
 }
 
 func TestListHandler(appDb *gorm.DB) {
-	handler := first.NewCrudHandler(reflect.TypeOf(Product{}), appDb)
+	handler := handlers.NewGormListHandler(reflect.TypeOf(Product{}), appDb)
 
 	objectsList := handler.ListOjects()
 
