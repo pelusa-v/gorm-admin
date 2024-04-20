@@ -2,16 +2,22 @@ package handlers
 
 import (
 	"bytes"
-	"embed"
 	"fmt"
-	"text/template"
+	"html/template"
+	"reflect"
 
 	"github.com/gofiber/fiber/v2"
+	"gorm.io/gorm"
 )
 
 type FiberHandler struct {
-	App         *fiber.App
-	TemplatesFs embed.FS
+	BaseHandler
+	App        *fiber.App
+	TestModels []string
+}
+
+func (handler *FiberHandler) RegisterModel(model string) {
+	handler.TestModels = append(handler.TestModels, model)
 }
 
 func (handler *FiberHandler) Register() {
@@ -22,11 +28,16 @@ func (handler *FiberHandler) Register() {
 		panic(err)
 	}
 
+	handler.RegisterHomePage(tmpl)
+}
+
+func (handler *FiberHandler) RegisterHomePage(template *template.Template) {
+
 	handler.App.Get("/admin", func(c *fiber.Ctx) error {
 
 		// Send the HTML content as the response
 		var tmplOutput bytes.Buffer
-		err = tmpl.Execute(&tmplOutput, nil)
+		err := template.Execute(&tmplOutput, handler.TestModels)
 		if err != nil {
 			return err
 		}
@@ -35,4 +46,33 @@ func (handler *FiberHandler) Register() {
 		c.Set("Content-Type", "text/html")
 		return c.SendString(tmplOutput.String())
 	})
+}
+
+type GormListHandler struct {
+	modelType reflect.Type
+	db        *gorm.DB
+}
+
+func NewGormListHandler(modelTypeMapped reflect.Type, db *gorm.DB) *GormListHandler {
+	return &GormListHandler{
+		modelType: modelTypeMapped,
+		db:        db,
+	}
+}
+
+func (h *GormListHandler) ListOjects() []interface{} {
+	objectsType := reflect.SliceOf(h.modelType)
+	concreteObjects := reflect.New(objectsType).Interface()
+
+	concrete := reflect.New(h.modelType).Interface()
+	query := h.db.Model(concrete)
+	query.Find(concreteObjects)
+
+	concreteSliceValue := reflect.ValueOf(concreteObjects).Elem()
+	resultSlice := make([]interface{}, concreteSliceValue.Len())
+	for i := 0; i < concreteSliceValue.Len(); i++ {
+		resultSlice[i] = concreteSliceValue.Index(i).Interface()
+	}
+
+	return resultSlice
 }

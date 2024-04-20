@@ -1,15 +1,18 @@
 package handlers
 
 import (
-	"embed"
 	"fmt"
 )
 
 type GinHandler struct {
-	App         *string
-	TemplatesFs embed.FS
+	BaseHandler
+	App *string
 }
 
 func (handler *GinHandler) Register() {
 	fmt.Println("Registering admin in Gin app")
+}
+
+func (handler *GinHandler) RegisterModel(model string) {
+
 }

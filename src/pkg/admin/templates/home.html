@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gorm Admin</title>
+</head>
+<body>
+    <h4>This is the best admin page!</h4>
+
+    <h1>List of mapped Models</h1>
+    <ul>
+        {{range .}}
+            <li>{{.}}</li>
+        {{end}}
+    </ul>
+</body>
+</html>
