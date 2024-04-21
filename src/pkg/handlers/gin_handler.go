@@ -10,9 +10,12 @@ type GinHandler struct {
 	App *string
 }
 
-// func (handler *GinHandler) Register() {
-// 	fmt.Println("Registering admin in Gin app")
-// }
+//	func (handler *GinHandler) Register() {
+//		fmt.Println("Registering admin in Gin app")
+//	}
+func (handler *GinHandler) RegisterPage(tmpl *template.Template, route string, tmplDataFunc func() any) {
+
+}
 
 func (handler *GinHandler) RegisterHomePage(tmpl *template.Template) {
 

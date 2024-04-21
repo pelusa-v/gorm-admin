@@ -30,7 +30,6 @@ func GetHomePage(modelTypes []reflect.Type, tmpl *template.Template) bytes.Buffe
 	for i, modelType := range modelTypes {
 		model := ModelsListItemData{Name: modelType.Name()}
 		modelsList[i] = model
-		// modelsList = append(modelsList, model)
 	}
 	data.Models = modelsList
 
@@ -52,4 +51,20 @@ func GetModelDetailPage(model DbModel, tmpl *template.Template) bytes.Buffer {
 	}
 
 	return tmplOutput
+}
+
+func GetHomePageData(modelTypes *[]reflect.Type) HomePageData {
+	data := HomePageData{}
+	modelsList := make([]ModelsListItemData, len(*modelTypes))
+	for i, modelType := range *modelTypes {
+		model := ModelsListItemData{Name: modelType.Name()}
+		modelsList[i] = model
+	}
+	data.Models = modelsList
+	return data
+}
+
+func GetModelDetailPageData(model DbModel) ModelDetailPageData {
+	data := ModelDetailPageData{Model: model.modelType.Name(), Objects: model.ListOjects()}
+	return data
 }

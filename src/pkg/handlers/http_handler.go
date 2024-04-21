@@ -13,6 +13,10 @@ type BuiltInHandler struct {
 // 	fmt.Println("Registering admin in BuiltIn http app")
 // }
 
+func (handler *BuiltInHandler) RegisterPage(tmpl *template.Template, route string, tmplDataFunc func() any) {
+
+}
+
 func (handler *BuiltInHandler) RegisterHomePage(tmpl *template.Template) {
 
 }
