@@ -2,12 +2,10 @@ package admin
 
 import (
 	"embed"
-	"fmt"
 	"html/template"
 	"reflect"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/pelusa-v/gorm-admin/src/pkg/data"
 	"github.com/pelusa-v/gorm-admin/src/pkg/handlers"
 	"gorm.io/gorm"
 )
@@ -58,24 +56,12 @@ func (admin *Admin) template(templateFsPath string) *template.Template {
 }
 
 func (admin *Admin) Register() {
-	// admin.Handler.RegisterHomePage(admin.template("templates/home.html"))
-
-	homePageTemplate := admin.template("templates/home.html")
-	admin.Handler.RegisterPage(homePageTemplate, "/admin", func() any {
-		return data.GetHomePageData(&admin.Models)
-	})
+	admin.registerHomePage()
 }
 
 func (admin *Admin) RegisterModel(model any) {
 	modelType := reflect.TypeOf(model) // Add models validation (validate that is a db model, validate against db)
 	admin.Models = append(admin.Models, modelType)
 
-	// admin.Handler.RegisterModelDetailPage(modelType, admin.template("templates/ModelDetail.html"))
-
-	dbModel := data.NewDbModel(modelType, admin.GormDB)
-	modelDetailPageTemplate := admin.template("templates/ModelDetail.html")
-	modelDetailPageRoute := fmt.Sprintf("/admin/%s", modelType.Name())
-	admin.Handler.RegisterPage(modelDetailPageTemplate, modelDetailPageRoute, func() any {
-		return data.GetModelDetailPageData(*dbModel)
-	})
+	admin.registerModelDetailPage(modelType)
 }
