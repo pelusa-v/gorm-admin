@@ -2,9 +2,7 @@ package samples
 
 import (
 	"fmt"
-	"reflect"
 
-	"github.com/pelusa-v/gorm-admin/src/pkg/handlers"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -21,16 +19,16 @@ func NewDbInstance() *gorm.DB {
 	return db
 }
 
-func TestListHandler(appDb *gorm.DB) {
-	handler := handlers.NewGormListHandler(reflect.TypeOf(Product{}), appDb)
+// func TestListHandler(appDb *gorm.DB) {
+// 	handler := handlers.NewGormListHandler(reflect.TypeOf(Product{}), appDb)
 
-	objectsList := handler.ListOjects()
+// 	objectsList := handler.ListOjects()
 
-	for _, v := range objectsList {
-		p := v.(Product)
-		fmt.Println(p.Id)
-		fmt.Println(p.Name)
-		fmt.Println(p.Email)
-		fmt.Println("..................")
-	}
-}
+// 	for _, v := range objectsList {
+// 		p := v.(Product)
+// 		fmt.Println(p.Id)
+// 		fmt.Println(p.Name)
+// 		fmt.Println(p.Email)
+// 		fmt.Println("..................")
+// 	}
+// }

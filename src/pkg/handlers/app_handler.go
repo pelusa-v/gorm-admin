@@ -1,18 +1,24 @@
 package handlers
 
 import (
-	"embed"
+	"html/template"
 	"reflect"
 
 	"gorm.io/gorm"
 )
 
 type AppHandler interface {
-	Register()
+	// Register()
 	RegisterModel(model reflect.Type)
+	RegisterHomePage(tmpl *template.Template)
+	RegisterModelDetailPage(modelType reflect.Type, tmpl *template.Template)
 }
 
 type BaseHandler struct {
-	GormDB      *gorm.DB
-	TemplatesFs embed.FS
+	GormDB *gorm.DB
+	Models []reflect.Type
+}
+
+func (handler *BaseHandler) RegisterModel(model reflect.Type) {
+	handler.Models = append(handler.Models, model)
 }

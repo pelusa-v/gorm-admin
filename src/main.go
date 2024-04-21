@@ -12,8 +12,8 @@ func main() {
 
 	admin := admin.NewFiberAdmin(app, db)
 	admin.Register()
-	admin.RegisteModel(samples.User{})
-	admin.RegisteModel(samples.Product{})
+	admin.RegisterModel(samples.User{})
+	admin.RegisterModel(samples.Product{})
 
 	// db := samples.NewDbInstance()
 	// samples.TestListHandler(db)
