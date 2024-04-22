@@ -7,7 +7,7 @@ import (
 
 type ModelDetailPageData struct {
 	Model   string
-	Objects []interface{}
+	Objects []DbObjectInstance
 }
 
 type HomePageData struct {
@@ -34,6 +34,6 @@ func GetHomePageData(modelTypes *[]reflect.Type) HomePageData {
 }
 
 func GetModelDetailPageData(model DbModel) ModelDetailPageData {
-	data := ModelDetailPageData{Model: model.modelType.Name(), Objects: model.ListOjects()}
+	data := ModelDetailPageData{Model: model.modelType.Name(), Objects: model.ListObjects()}
 	return data
 }

@@ -12,6 +12,7 @@ type FiberHandler struct {
 	App *fiber.App
 }
 
+// Handle /admin/Product?id=1 route, (DON'T REGISTER ALL ID's ROUTES)
 func (handler *FiberHandler) RegisterPage(tmpl *template.Template, route string, tmplDataFunc func() any) {
 	handler.App.Get(route, func(c *fiber.Ctx) error {
 		var tmplOutput bytes.Buffer
