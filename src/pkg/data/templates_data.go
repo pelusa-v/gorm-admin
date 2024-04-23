@@ -70,7 +70,11 @@ func GetModelObjectDetailPageData(model DbModel, pk string) ModelObjectDetailPag
 }
 
 func GetObjectFields(o interface{}) ModelObject {
-	objectValue := reflect.ValueOf(o).Elem()
+	objectValue := reflect.ValueOf(o)
+	if objectValue.Kind() == reflect.Ptr {
+		objectValue = objectValue.Elem()
+	}
+
 	var objectFields []reflect.StructField
 	var objectFieldsValues []reflect.Value
 
@@ -79,8 +83,8 @@ func GetObjectFields(o interface{}) ModelObject {
 		objectFieldsValues = append(objectFieldsValues, objectValue.Field(i))
 	}
 
+	fmt.Println("---------------------------")
 	for i := 0; i < objectValue.NumField(); i++ {
-		fmt.Println("---------------------------")
 		fmt.Printf("NAME: %v :\n", objectValue.Type().Field(i).Name)
 		fmt.Printf("TYPE: %v :\n", objectValue.Type().Field(i).Type)
 		fmt.Printf("TAG: %v :\n", objectValue.Type().Field(i).Tag)
