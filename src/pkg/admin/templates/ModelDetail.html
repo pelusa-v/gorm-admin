@@ -28,20 +28,17 @@
     <table>
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Email</th>
-                <th>Email</th>
+                {{range .ModelObjectsFields}}
+                    <th>{{.Name}} ({{.Type}})</th>
+                {{end}}
             </tr>
         </thead>
         <tbody>
 
-            {{range .Objects}}
+            {{range .ModelObjects}}
                 <tr>
-                    {{range .Properties}}
-                        <td>{{.FieldData.Name}}</td>
-                        <td>{{.Value}}</td>
+                    {{range .FieldsValues}}
+                        <td>{{.}}</td>
                     {{end}}
                 </tr>
             {{end}}

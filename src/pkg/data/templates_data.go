@@ -6,8 +6,15 @@ import (
 )
 
 type ModelDetailPageData struct {
-	Model   string
-	Objects []DbObjectInstance
+	Model              string
+	ModelObjects       []ModelObject
+	ModelObjectsFields []reflect.StructField
+}
+
+type ModelObject struct {
+	Fields       []reflect.StructField
+	FieldsValues []reflect.Value
+	DetailURL    string
 }
 
 type HomePageData struct {
@@ -34,6 +41,26 @@ func GetHomePageData(modelTypes *[]reflect.Type) HomePageData {
 }
 
 func GetModelDetailPageData(model DbModel) ModelDetailPageData {
-	data := ModelDetailPageData{Model: model.modelType.Name(), Objects: model.ListObjects()}
+	data := ModelDetailPageData{Model: model.modelType.Name(), ModelObjectsFields: model.GetModelFields()}
+
+	var modelObjects []ModelObject
+	objects := model.ListObjects()
+	for _, o := range objects {
+		objectValue := reflect.ValueOf(o)
+		var objectFields []reflect.StructField
+		var objectFieldsValues []reflect.Value
+
+		for i := 0; i < objectValue.NumField(); i++ {
+			objectFields = append(objectFields, objectValue.Type().Field(i))
+			objectFieldsValues = append(objectFieldsValues, objectValue.Field(i))
+		}
+
+		modelObjects = append(modelObjects, ModelObject{
+			Fields:       objectFields,
+			FieldsValues: objectFieldsValues,
+		})
+	}
+	data.ModelObjects = modelObjects
+
 	return data
 }
