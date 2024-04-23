@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse; /* Collapses the border between cells */
+        }
+        th, td {
+            border: 1px solid black; /* Adds a border to each cell */
+            padding: 8px; /* Adds padding inside each cell */
+            text-align: left; /* Aligns text to the left */
+        }
+        th {
+            background-color: #f2f2f2; /* Light gray background for headers */
+        }
+    </style>
+
+    <title>Gorm Admin</title>
+</head>
+<body>
+    <h4>This is the best admin page!</h4>
+
+    <h2>{{.Model}}</h2>
+
+    <table>
+        <thead>
+            <tr>
+                {{range .ModelObject.Fields}}
+                    <th>{{.Name}} ({{.Type}})</th>
+                {{end}}
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {{range .ModelObject.FieldsValues}}
+                    <td>{{.}}</td>
+                {{end}}
+            </tr>
+        </tbody>
+    </table>
+    
+</body>
+</html>

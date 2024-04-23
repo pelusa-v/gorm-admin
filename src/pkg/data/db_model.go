@@ -36,6 +36,12 @@ func (m *DbModel) ListObjects() []interface{} {
 	return resultSlice
 }
 
+func (m *DbModel) GetObject(pk string) interface{} {
+	concreteObject := reflect.New(m.modelType).Interface()
+	m.db.First(&concreteObject, pk)
+	return concreteObject
+}
+
 // func (m *DbModel) ListObjects() []DbObjectInstance {
 // 	objectsType := reflect.SliceOf(m.modelType)
 // 	concreteDbObjects := reflect.New(objectsType).Interface()
@@ -55,20 +61,20 @@ func (m *DbModel) ListObjects() []interface{} {
 // 		var objectProperties []reflect.StructField
 // 		var objectPropertiesValues []reflect.Value
 
-// 		for i := 0; i < dbObject.NumField(); i++ {
-// 			propertyValue := dbObject.Field(i)
-// 			property := dbObject.Type().Field(i)
+// for i := 0; i < dbObject.NumField(); i++ {
+// 	propertyValue := dbObject.Field(i)
+// 	property := dbObject.Type().Field(i)
 
-// 			objectPropertiesValues = append(objectPropertiesValues, propertyValue)
-// 			objectProperties = append(objectProperties, property)
+// 	objectPropertiesValues = append(objectPropertiesValues, propertyValue)
+// 	objectProperties = append(objectProperties, property)
 
-// 			fmt.Println("---------------------------")
-// 			fmt.Printf("%v :\n", dbObject.Type().Field(i).Name)
-// 			fmt.Printf("%v :\n", dbObject.Type().Field(i).Type)
-// 			fmt.Printf("%v :\n", dbObject.Type().Field(i).Tag)
-// 			fmt.Printf("%v :\n", dbObject.Type().Field(i))
-// 			fmt.Println(dbObject.Field(i))
-// 		}
+// 	fmt.Println("---------------------------")
+// 	fmt.Printf("%v :\n", dbObject.Type().Field(i).Name)
+// 	fmt.Printf("%v :\n", dbObject.Type().Field(i).Type)
+// 	fmt.Printf("%v :\n", dbObject.Type().Field(i).Tag)
+// 	fmt.Printf("%v :\n", dbObject.Type().Field(i))
+// 	fmt.Println(dbObject.Field(i))
+// }
 
 // 		object.Fields = objectProperties
 // 		object.FieldsValues = objectPropertiesValues

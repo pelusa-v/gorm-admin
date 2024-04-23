@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"html/template"
-	"reflect"
 )
 
 type BuiltInHandler struct {
@@ -13,13 +12,9 @@ type BuiltInHandler struct {
 // 	fmt.Println("Registering admin in BuiltIn http app")
 // }
 
-func (handler *BuiltInHandler) RegisterPage(tmpl *template.Template, route string, tmplDataFunc func() any) {
+func (handler *BuiltInHandler) RegisterSimplePage(tmpl *template.Template, route string, tmplDataFunc func() any) {
 
 }
 
-func (handler *BuiltInHandler) RegisterHomePage(tmpl *template.Template) {
-
-}
-
-func (handler *BuiltInHandler) RegisterModelDetailPage(modelType reflect.Type, tmpl *template.Template) {
+func (handler *BuiltInHandler) RegisterPkPage(tmpl *template.Template, route string, tmplDataFunc func(pk string) any) {
 }

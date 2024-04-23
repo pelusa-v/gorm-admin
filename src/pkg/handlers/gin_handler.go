@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"html/template"
-	"reflect"
 )
 
 type GinHandler struct {
@@ -13,13 +12,9 @@ type GinHandler struct {
 //	func (handler *GinHandler) Register() {
 //		fmt.Println("Registering admin in Gin app")
 //	}
-func (handler *GinHandler) RegisterPage(tmpl *template.Template, route string, tmplDataFunc func() any) {
+func (handler *GinHandler) RegisterSimplePage(tmpl *template.Template, route string, tmplDataFunc func() any) {
 
 }
 
-func (handler *GinHandler) RegisterHomePage(tmpl *template.Template) {
-
-}
-
-func (handler *GinHandler) RegisterModelDetailPage(modelType reflect.Type, tmpl *template.Template) {
+func (handler *GinHandler) RegisterPkPage(tmpl *template.Template, route string, tmplDataFunc func(pk string) any) {
 }

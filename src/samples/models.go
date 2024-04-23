@@ -13,3 +13,9 @@ type Product struct {
 	Name  string
 	Email string
 }
+
+type Car struct {
+	Id    uint `gorm:"primaryKey"`
+	Name  string
+	Email string
+}

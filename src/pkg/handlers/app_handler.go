@@ -5,7 +5,8 @@ import (
 )
 
 type AppHandler interface {
-	RegisterPage(tmpl *template.Template, route string, tmplDataFunc func() any)
+	RegisterSimplePage(tmpl *template.Template, route string, tmplDataFunc func() any)
+	RegisterPkPage(tmpl *template.Template, route string, tmplDataFunc func(pk string) any)
 	// RegisterHomePage(tmpl *template.Template)
 	// RegisterModelDetailPage(modelType reflect.Type, tmpl *template.Template)
 }

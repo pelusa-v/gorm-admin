@@ -64,4 +64,5 @@ func (admin *Admin) RegisterModel(model any) {
 	admin.Models = append(admin.Models, modelType)
 
 	admin.registerModelDetailPage(modelType)
+	admin.registerModelObjectDetailPage(modelType)
 }
