@@ -9,7 +9,7 @@ type User struct {
 }
 
 type Product struct {
-	Id    uint
+	ID    uint
 	Name  string
 	Email string
 }

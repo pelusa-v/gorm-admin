@@ -41,7 +41,3 @@ func (m *DbModel) GetObject(pk string) interface{} {
 	m.db.First(&concreteObject, pk)
 	return concreteObject
 }
-
-func FieldHasEmbeddedStructs(f reflect.StructField) bool {
-	return f.Anonymous || f.Type == reflect.TypeOf(gorm.DeletedAt{})
-}

@@ -13,11 +13,13 @@ type ModelDetailPageData struct {
 	Model              string
 	ModelObjects       []ModelObject
 	ModelObjectsFields []reflect.StructField
+	PreviousURL        string
 }
 
 type ModelObjectDetailPageData struct {
 	Model       string
 	ModelObject ModelObject
+	PreviousURL string
 }
 
 type ModelObject struct {
@@ -46,8 +48,9 @@ func GetHomePageData(modelTypes *[]reflect.Type) HomePageData {
 }
 
 func GetModelDetailPageData(model DbModel) ModelDetailPageData {
-	modelFields := GetObjectFields(model.modelType)
-	data := ModelDetailPageData{Model: model.modelType.Name(), ModelObjectsFields: modelFields}
+	modelType := model.modelType
+	modelFields := GetObjectFields(modelType)
+	data := ModelDetailPageData{Model: modelType.Name(), ModelObjectsFields: modelFields, PreviousURL: "/admin"}
 
 	var modelObjects []ModelObject
 	objects := model.ListObjects()
@@ -62,7 +65,8 @@ func GetModelDetailPageData(model DbModel) ModelDetailPageData {
 
 func GetModelObjectDetailPageData(model DbModel, pk string) ModelObjectDetailPageData {
 	object := model.GetObject(pk)
-	data := ModelObjectDetailPageData{Model: model.modelType.Name(), ModelObject: MapModelObject(object)}
+	data := ModelObjectDetailPageData{Model: model.modelType.Name(), ModelObject: MapModelObject(object),
+		PreviousURL: fmt.Sprintf("/admin/%s", model.modelType.Name())}
 	return data
 }
 
@@ -74,22 +78,12 @@ func MapModelObject(o interface{}) ModelObject {
 
 	objectFields := GetObjectFields(objectValue.Type())
 	objectFieldsValues := GetObjectFieldsValues(objectValue)
-
-	fmt.Printf("objectFields: %d\n", len(objectFields))
-	fmt.Printf("objectFieldsValues: %d\n", len(objectFieldsValues))
-
-	for i := 0; i < len(objectFields); i++ {
-		fmt.Printf("%v - %v (%v)\n", objectFields[i].Name, objectFields[i].Type, objectFields[i].Tag)
-	}
-	fmt.Println("------------------------------------")
-
-	for i := 0; i < len(objectFieldsValues); i++ {
-		fmt.Printf("%v\n", objectFieldsValues[i])
-	}
+	pkField := FindPkField(objectFields)
 
 	return ModelObject{
 		Fields:       objectFields,
 		FieldsValues: objectFieldsValues,
+		DetailURL:    fmt.Sprintf("/admin/%s/%v", objectValue.Type().Name(), objectValue.FieldByName(pkField.Name)),
 	}
 }
 
@@ -132,29 +126,3 @@ func GetObjectFields(objectType reflect.Type) []reflect.StructField {
 
 	return objectFields
 }
-
-// func GetFieldsAndValues(objectValue reflect.Value) ([]reflect.StructField, []reflect.Value) {
-// 	if objectValue.Kind() == reflect.Ptr {
-// 		objectValue = objectValue.Elem()
-// 	}
-
-// 	var objectFields []reflect.StructField
-// 	var objectFieldsValues []reflect.Value
-
-// 	objectType := objectValue.Type()
-// 	for i := 0; i < objectValue.NumField(); i++ {
-// 		fieldType := objectType.Field(i)
-// 		fieldValue := objectValue.Field(i)
-
-// 		if FieldHasEmbeddedStructs(fieldType) {
-// 			embeddedFields, embeddedFieldsValues := GetFieldsAndValues(fieldValue)
-// 			objectFields = append(objectFields, embeddedFields...)
-// 			objectFieldsValues = append(objectFieldsValues, embeddedFieldsValues...)
-// 		} else {
-// 			objectFields = append(objectFields, fieldType)
-// 			objectFieldsValues = append(objectFieldsValues, fieldValue)
-// 		}
-// 	}
-
-// 	return objectFields, objectFieldsValues
-// }
