@@ -40,3 +40,9 @@ func (handler *FiberHandler) RegisterPkPage(tmpl *template.Template, route strin
 		return c.SendString(tmplOutput.String())
 	})
 }
+
+func (handler *FiberHandler) RegisterStatic(staticFolder string, staticPath string) {
+	handler.App.Static(staticPath, staticFolder, fiber.Static{
+		Browse: true,
+	})
+}

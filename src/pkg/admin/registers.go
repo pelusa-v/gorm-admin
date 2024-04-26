@@ -13,6 +13,8 @@ func (admin *Admin) registerHomePage() {
 	admin.Handler.RegisterSimplePage(homePageTemplate, "/admin", func() any {
 		return data.GetHomePageData(&admin.Models)
 	})
+
+	admin.Handler.RegisterStatic("/gorm-admin-static", "src/pkg/admin/static")
 }
 
 func (admin *Admin) registerModelDetailPage(modelType reflect.Type) {

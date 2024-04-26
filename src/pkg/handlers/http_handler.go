@@ -18,3 +18,6 @@ func (handler *BuiltInHandler) RegisterSimplePage(tmpl *template.Template, route
 
 func (handler *BuiltInHandler) RegisterPkPage(tmpl *template.Template, route string, tmplDataFunc func(pk string) any) {
 }
+
+func (handler *BuiltInHandler) RegisterStatic(staticFolder string, staticPath string) {
+}

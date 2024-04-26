@@ -10,7 +10,10 @@ import (
 	"gorm.io/gorm"
 )
 
+// static/bootstrap/dist/css/bootstrap.min.css
+
 //go:embed templates/*
+//go:embed static/bootstrap/*
 var AdminTemplates embed.FS
 
 type Admin struct {

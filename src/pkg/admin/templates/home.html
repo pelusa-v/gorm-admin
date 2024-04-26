@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link href="/gorm-admin-static/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/gorm-admin-static/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <title>Gorm Admin</title>
 </head>
 <body>
@@ -14,5 +17,43 @@
             <li><a href="{{.DetailURL}}">{{.Name}}</a></li>
         {{end}}
     </ul>
+
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Column 1</th>
+                    <th scope="col">Column 2</th>
+                    <th scope="col">Column 3</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 4</td>
+                    <td>Data 5</td>
+                    <td>Data 6</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <form class="row g-3 needs-validation" novalidate>
+        <div class="col-md-4">
+            <label for="validationCustom01" class="form-label">First name</label>
+            <input type="text" class="form-control" id="validationCustom01" required>
+        </div>
+        <div class="col-md-4">
+            <label for="validationCustom02" class="form-label">Last name</label>
+            <input type="text" class="form-control" id="validationCustom02" required>
+        </div>
+        <div class="col-12">
+            <button class="btn btn-primary" type="submit">Submit form</button>
+        </div>
+    </form>
 </body>
 </html>
