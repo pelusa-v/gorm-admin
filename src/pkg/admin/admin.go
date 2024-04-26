@@ -13,7 +13,7 @@ import (
 // static/bootstrap/dist/css/bootstrap.min.css
 
 //go:embed templates/*
-//go:embed static/bootstrap/*
+//go:embed static/styles/*
 var AdminTemplates embed.FS
 
 type Admin struct {
