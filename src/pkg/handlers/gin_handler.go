@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"html/template"
+	"io/fs"
 )
 
 type GinHandler struct {
@@ -19,5 +20,5 @@ func (handler *GinHandler) RegisterSimplePage(tmpl *template.Template, route str
 func (handler *GinHandler) RegisterPkPage(tmpl *template.Template, route string, tmplDataFunc func(pk string) any) {
 }
 
-func (handler *GinHandler) RegisterStatic(staticFolder string, staticPath string) {
+func (handler *GinHandler) RegisterStatic(fs fs.FS) {
 }

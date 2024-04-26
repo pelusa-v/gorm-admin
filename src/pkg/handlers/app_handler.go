@@ -2,12 +2,13 @@ package handlers
 
 import (
 	"html/template"
+	"io/fs"
 )
 
 type AppHandler interface {
 	RegisterSimplePage(tmpl *template.Template, route string, tmplDataFunc func() any)
 	RegisterPkPage(tmpl *template.Template, route string, tmplDataFunc func(pk string) any)
-	RegisterStatic(staticFolder string, staticPath string)
+	RegisterStatic(fs fs.FS)
 	// RegisterHomePage(tmpl *template.Template)
 	// RegisterModelDetailPage(modelType reflect.Type, tmpl *template.Template)
 }

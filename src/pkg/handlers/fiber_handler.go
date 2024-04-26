@@ -3,8 +3,11 @@ package handlers
 import (
 	"bytes"
 	"html/template"
+	"io/fs"
+	"net/http"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/filesystem"
 )
 
 type FiberHandler struct {
@@ -41,7 +44,8 @@ func (handler *FiberHandler) RegisterPkPage(tmpl *template.Template, route strin
 	})
 }
 
-func (handler *FiberHandler) RegisterStatic(staticFolder string, staticPath string) {
-	// handler.App.Static(staticPath, staticFolder)
-	handler.App.Static(staticPath, staticFolder)
+func (handler *FiberHandler) RegisterStatic(fs fs.FS) {
+	handler.App.Use("/gorm-admin-statics", filesystem.New(filesystem.Config{
+		Root: http.FS(fs),
+	}))
 }

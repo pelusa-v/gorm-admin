@@ -33,22 +33,22 @@ func NewFiberAdmin(app *fiber.App, db *gorm.DB) *Admin {
 	return admin
 }
 
-func NewGinAdmin(app *string, db *gorm.DB) *Admin {
-	handler := &handlers.GinHandler{
-		App:         app,
-		BaseHandler: handlers.BaseHandler{},
-	}
-	admin := &Admin{Handler: handler, TemplatesFs: AdminTemplates, GormDB: db}
-	return admin
-}
+// func NewGinAdmin(app *string, db *gorm.DB) *Admin {
+// 	handler := &handlers.GinHandler{
+// 		App:         app,
+// 		BaseHandler: handlers.BaseHandler{},
+// 	}
+// 	admin := &Admin{Handler: handler, TemplatesFs: AdminTemplates, GormDB: db}
+// 	return admin
+// }
 
-func NewAdmin(db *gorm.DB) *Admin {
-	handler := &handlers.BuiltInHandler{
-		BaseHandler: handlers.BaseHandler{},
-	}
-	admin := &Admin{Handler: handler, TemplatesFs: AdminTemplates, GormDB: db}
-	return admin
-}
+// func NewAdmin(db *gorm.DB) *Admin {
+// 	handler := &handlers.BuiltInHandler{
+// 		BaseHandler: handlers.BaseHandler{},
+// 	}
+// 	admin := &Admin{Handler: handler, TemplatesFs: AdminTemplates, GormDB: db}
+// 	return admin
+// }
 
 func (admin *Admin) template(templateFsPath string) *template.Template {
 	tmpl, err := template.ParseFS(admin.TemplatesFs, templateFsPath)

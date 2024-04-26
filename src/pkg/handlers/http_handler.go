@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"html/template"
+	"io/fs"
 )
 
 type BuiltInHandler struct {
@@ -19,5 +20,5 @@ func (handler *BuiltInHandler) RegisterSimplePage(tmpl *template.Template, route
 func (handler *BuiltInHandler) RegisterPkPage(tmpl *template.Template, route string, tmplDataFunc func(pk string) any) {
 }
 
-func (handler *BuiltInHandler) RegisterStatic(staticFolder string, staticPath string) {
+func (handler *BuiltInHandler) RegisterStatic(fs fs.FS) {
 }
