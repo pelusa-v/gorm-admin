@@ -11,6 +11,7 @@ import (
 )
 
 // static/bootstrap/dist/css/bootstrap.min.css
+// //go:embed static/bootstrap/*
 
 //go:embed templates/*
 //go:embed static/styles/*

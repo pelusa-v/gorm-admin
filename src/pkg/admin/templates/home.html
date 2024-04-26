@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap CSS -->
-    <link href="/gorm-admin-static/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="/gorm-admin-static/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="/gorm-admin-static/styles/main.css" rel="stylesheet">
+    <!-- <link href="/gorm-admin-static/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <title>Gorm Admin</title>
 </head>
 <body>
     <h4>This is the best admin page!</h4>
 
-    <h2>List of mapped Models</h2>
+    <h2 class="test">List of mapped Models</h2>
     <ul>
         {{range .Models}}
             <li><a href="{{.DetailURL}}">{{.Name}}</a></li>

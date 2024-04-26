@@ -42,7 +42,6 @@ func (handler *FiberHandler) RegisterPkPage(tmpl *template.Template, route strin
 }
 
 func (handler *FiberHandler) RegisterStatic(staticFolder string, staticPath string) {
-	handler.App.Static(staticPath, staticFolder, fiber.Static{
-		Browse: true,
-	})
+	// handler.App.Static(staticPath, staticFolder)
+	handler.App.Static(staticPath, staticFolder)
 }
