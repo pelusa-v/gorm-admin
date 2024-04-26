@@ -1,0 +1,21 @@
+{{define "sidebar"}}
+<div class="sidebar">
+    <h2>GORM admin</h2>
+    <p class="section-title">Models</p>
+    <ul>
+         {{range .Models}}
+             <li class="sidebar-item-title"><span></span><a href="{{.DetailURL}}">{{.Name}}</a></li>
+         {{end}}
+    </ul>
+
+    <p class="section-title">Another section</p>
+    <ul>
+        <li class="sidebar-item-title"><span></span><a href="#">Some option</a></li>
+        <li class="sidebar-item-title"><span></span><a href="#">Some option</a></li>
+        <li class="sidebar-item-title"><span></span><a href="#">Some option</a></li>
+        <li class="sidebar-item-title"><span></span><a href="#">Some option</a></li>
+        <li class="sidebar-item-title"><span></span><a href="#">Some option</a></li>
+
+    </ul>
+</div>
+{{end}}

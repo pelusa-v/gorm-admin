@@ -1,7 +1,75 @@
-h2 {
-    font-size: 100px;
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 100;
+    font-style: normal;
+}
+.sidebar {
+    padding-left: 20px;
+    width: 15%;
+    background-color: #a9ced4;
+    height: 100vh;
+}
+.main-content {
+    width: 80%;
+    padding: 20px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
 }
 
-.test {
-    color: violet;
+span {
+    border-bottom: 1px solid;
+      border-left: 1px solid;
+      height: 1.5rem;
+      width: 2rem;
+      display: inline-block;
+      margin-bottom: 0.3rem;
+      margin-left: 1rem;
+  }
+
+  @media screen and (max-width: 480px) {
+    span {
+      border-bottom: 1px solid;
+      border-left: 1px solid;
+      height: 1.9rem;
+      width: 3rem;
+      display: inline-block;
+      margin-bottom: 0.3rem;
+      margin-left: 1rem;
+    }
+  }
+
+  .sidebar-item-title {
+    font-size: medium;
+  }
+
+  @media screen and (max-width: 480px) {
+    .sidebar-item-title {
+      font-size: larger;
+    }
+  }
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+ul, ol {
+    list-style-type: none; /* This removes bullets and numbers */
+}
+
+.section-title {
+    margin-left: 15px;
 }
