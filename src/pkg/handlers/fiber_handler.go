@@ -16,10 +16,11 @@ type FiberHandler struct {
 }
 
 // Handle /admin/Product/1 route, (:id)
-func (handler *FiberHandler) RegisterSimplePage(tmpl *template.Template, route string, tmplDataFunc func() any) {
+func (handler *FiberHandler) RegisterSimplePage(tmpl *template.Template, templateName string, route string, tmplDataFunc func() any) {
 	handler.App.Get(route, func(c *fiber.Ctx) error {
 		var tmplOutput bytes.Buffer
-		err := tmpl.Execute(&tmplOutput, tmplDataFunc())
+		// err := tmpl.Execute(&tmplOutput, tmplDataFunc())
+		err := tmpl.ExecuteTemplate(&tmplOutput, templateName, tmplDataFunc())
 		if err != nil {
 			panic(err)
 		}
@@ -29,12 +30,13 @@ func (handler *FiberHandler) RegisterSimplePage(tmpl *template.Template, route s
 	})
 }
 
-func (handler *FiberHandler) RegisterPkPage(tmpl *template.Template, route string, tmplDataFunc func(pk string) any) {
+func (handler *FiberHandler) RegisterPkPage(tmpl *template.Template, templateName string, route string, tmplDataFunc func(pk string) any) {
 	handler.App.Get(route, func(c *fiber.Ctx) error {
 		pk := c.Params("pk")
 
 		var tmplOutput bytes.Buffer
-		err := tmpl.Execute(&tmplOutput, tmplDataFunc(pk))
+		// err := tmpl.Execute(&tmplOutput, tmplDataFunc(pk))
+		err := tmpl.ExecuteTemplate(&tmplOutput, templateName, tmplDataFunc(pk))
 		if err != nil {
 			panic(err)
 		}

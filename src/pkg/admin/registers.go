@@ -9,9 +9,9 @@ import (
 )
 
 func (admin *Admin) registerHomePage() {
-	homePageTemplate := admin.template("templates/home.html")
+	templates := admin.template("templates/*.html")
 
-	admin.Handler.RegisterSimplePage(homePageTemplate, "/admin", func() any {
+	admin.Handler.RegisterSimplePage(templates, "home.html", "/admin", func() any {
 		return data.GetHomePageData(&admin.Models)
 	})
 
@@ -21,20 +21,20 @@ func (admin *Admin) registerHomePage() {
 
 func (admin *Admin) registerModelDetailPage(modelType reflect.Type) {
 	dbModel := data.NewDbModel(modelType, admin.GormDB)
-	modelDetailPageTemplate := admin.template("templates/ModelDetail.html")
+	templates := admin.template("templates/*.html")
 	modelDetailPageRoute := fmt.Sprintf("/admin/%s", modelType.Name())
 
-	admin.Handler.RegisterSimplePage(modelDetailPageTemplate, modelDetailPageRoute, func() any {
+	admin.Handler.RegisterSimplePage(templates, "ModelDetail.html", modelDetailPageRoute, func() any {
 		return data.GetModelDetailPageData(*dbModel)
 	})
 }
 
 func (admin *Admin) registerModelObjectDetailPage(modelType reflect.Type) {
 	dbModel := data.NewDbModel(modelType, admin.GormDB)
-	modelObjectDetailPageTemplate := admin.template("templates/ModelObjectDetail.html")
+	templates := admin.template("templates/*.html")
 	modelObjectDetailPageRoute := fmt.Sprintf("/admin/%s/:pk", modelType.Name())
 
-	admin.Handler.RegisterPkPage(modelObjectDetailPageTemplate, modelObjectDetailPageRoute, func(pk string) any {
+	admin.Handler.RegisterPkPage(templates, "ModelObjectDetail.html", modelObjectDetailPageRoute, func(pk string) any {
 		return data.GetModelObjectDetailPageData(*dbModel, pk)
 	})
 }
