@@ -5,27 +5,28 @@
 <body>
     {{template "sidebar" .}}
     <div class="main-content">
+        <h3><a href="{{ .PreviousURL}}">Go back</a></h3>
         <h2>Model: {{.Model}}</h2>
         <table class="model-detail-table">
             <thead>
                 <tr>
-                    {{range .ModelObjectsFields}}
-                        <th>{{.Name}} ({{.Type}})</th>
-                    {{end}}
                     <td>
                         Actions
                     </td>
+                    {{range .ModelObjectsFields}}
+                        <th>{{.Name}} ({{.Type}})</th>
+                    {{end}}
                 </tr>
             </thead>
             <tbody>
                 {{range .ModelObjects}}
                     <tr>
-                        {{range .FieldsValues}}
-                            <td>{{.}}</td>
-                        {{end}}
                         <td>
                             <a href="{{ .DetailURL}}">Go</a>
                         </td>
+                        {{range .FieldsValues}}
+                            <td>{{.}}</td>
+                        {{end}}
                     </tr>
                 {{end}}
             </tbody>

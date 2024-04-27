@@ -4,27 +4,27 @@
 
 <body>
     {{template "sidebar" .}}
-    <h3><a href="{{ .PreviousURL}}">Go back</a></h3>
-    <h4>This is the best admin page!</h4>
+    <div class="main-content">
+        <h3><a href="{{ .PreviousURL}}">Go back</a></h3>
+        <h2>Model: {{.Model}}</h2>
 
-    <h2>{{.Model}}</h2>
-
-    <table>
-        <thead>
-            <tr>
-                {{range .ModelObject.Fields}}
-                    <th>{{.Name}} ({{.Type}})</th>
-                {{end}}
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                {{range .ModelObject.FieldsValues}}
-                    <td>{{.}}</td>
-                {{end}}
-            </tr>
-        </tbody>
-    </table>
+        <table>
+            <thead>
+                <tr>
+                    {{range .ModelObject.Fields}}
+                        <th>{{.Name}} ({{.Type}})</th>
+                    {{end}}
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    {{range .ModelObject.FieldsValues}}
+                        <td>{{.}}</td>
+                    {{end}}
+                </tr>
+            </tbody>
+        </table>
+    </div>
     
 </body>
 </html>

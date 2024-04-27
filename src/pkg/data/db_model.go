@@ -41,3 +41,7 @@ func (m *DbModel) GetObject(pk string) interface{} {
 	m.db.First(&concreteObject, pk)
 	return concreteObject
 }
+
+func (m *DbModel) CreateObject(newObject reflect.Value) {
+	m.db.Create(newObject.Interface())
+}
