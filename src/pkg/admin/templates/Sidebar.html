@@ -1,10 +1,11 @@
 {{define "sidebar"}}
 <div class="sidebar">
-    <h2>{{.AdminName}}</h2>
+    <h2 class="admin-name"><a class="admin-name" href="/admin">{{.AdminName}}</a></h2>
+    <hr class="sidebar-line">
     <p class="section-title">Models</p>
-    <ul>
+    <ul class="models-tree">
          {{range .Models}}
-             <li class="sidebar-item-title"><span></span><a href="{{.DetailURL}}">{{.Name}}</a></li>
+             <li class="sidebar-item-title models-tree"><span class="models-tree"></span><a class="models-tree" href="{{.DetailURL}}">{{.Name}}</a></li>
          {{end}}
     </ul>
 <!-- 

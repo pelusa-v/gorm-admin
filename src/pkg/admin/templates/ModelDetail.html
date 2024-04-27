@@ -4,33 +4,32 @@
 
 <body>
     {{template "sidebar" .}}
-    <h3><a href="{{ .PreviousURL}}">Home</a></h3>
-    <h4>This is the best admin page!</h4>
-
-    <h2>{{.Model}}</h2>
-    <table>
-        <thead>
-            <tr>
-                <td>
-                    Actions
-                </td>
-                {{range .ModelObjectsFields}}
-                    <th>{{.Name}} ({{.Type}})</th>
-                {{end}}
-            </tr>
-        </thead>
-        <tbody>
-            {{range .ModelObjects}}
+    <div class="main-content">
+        <h2>Model: {{.Model}}</h2>
+        <table class="model-detail-table">
+            <thead>
                 <tr>
-                    <td>
-                        <a href="{{ .DetailURL}}">Go</a>
-                    </td>
-                    {{range .FieldsValues}}
-                        <td>{{.}}</td>
+                    {{range .ModelObjectsFields}}
+                        <th>{{.Name}} ({{.Type}})</th>
                     {{end}}
+                    <td>
+                        Actions
+                    </td>
                 </tr>
-            {{end}}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {{range .ModelObjects}}
+                    <tr>
+                        {{range .FieldsValues}}
+                            <td>{{.}}</td>
+                        {{end}}
+                        <td>
+                            <a href="{{ .DetailURL}}">Go</a>
+                        </td>
+                    </tr>
+                {{end}}
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>

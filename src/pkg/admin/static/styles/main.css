@@ -8,8 +8,9 @@ body {
 }
 .sidebar {
     padding-left: 20px;
-    width: 15%;
-    background-color: #a9ced4;
+    width: 13%;
+    /* background-color: #a9ced4; */
+    background-color: #92bfc6;
     height: 100vh;
 }
 .main-content {
@@ -29,22 +30,24 @@ th, td {
 span {
     border-bottom: 1px solid;
       border-left: 1px solid;
-      height: 1.5rem;
-      width: 2rem;
+      height: 1rem;
+      width: 1.5rem;
       display: inline-block;
       margin-bottom: 0.3rem;
       margin-left: 1rem;
+      margin-right: 2px;
   }
 
   @media screen and (max-width: 480px) {
     span {
       border-bottom: 1px solid;
       border-left: 1px solid;
-      height: 1.9rem;
-      width: 3rem;
+      height: 1.4rem;
+      width: 2.5rem;
       display: inline-block;
       margin-bottom: 0.3rem;
       margin-left: 1rem;
+      margin-right: 2px;
     }
   }
 
@@ -67,9 +70,32 @@ a:hover {
 }
 
 ul, ol {
-    list-style-type: none; /* This removes bullets and numbers */
+  padding-left: 5px;
+  margin-left: 0;
+  list-style-type: none; /* This removes bullets and numbers */
+}
+
+.models-tree {
+  font-size: 14px;
 }
 
 .section-title {
-    margin-left: 15px;
+    margin-left: 13px;
+    font-weight: 500;
+}
+
+.model-detail-table {
+  font-size: 13.5px;
+}
+
+.sidebar-line {
+  background-color: rgb(255, 255, 255);
+  color: rgb(255, 255, 255);
+  border: rgb(255, 255, 255);
+  border-style: solid;
+}
+
+.admin-name {
+  color: rgb(255, 255, 255);
+  text-decoration: none;
 }
