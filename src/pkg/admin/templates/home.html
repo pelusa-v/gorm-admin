@@ -1,85 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap CSS -->
-    <link href="/gorm-admin-statics/main.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <!-- <link href="/gorm-admin-static/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> -->
-    <title>Gorm Admin</title>
-</head>
-<!-- <body>
-    <h4>This is the best admin page!</h4>
-
-    <h2 class="test">List of mapped Models</h2>
-    <ul>
-        {{range .Models}}
-            <li><a href="{{.DetailURL}}">{{.Name}}</a></li>
-        {{end}}
-    </ul>
-
-    <div class="container">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Column 1</th>
-                    <th scope="col">Column 2</th>
-                    <th scope="col">Column 3</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Data 1</td>
-                    <td>Data 2</td>
-                    <td>Data 3</td>
-                </tr>
-                <tr>
-                    <td>Data 4</td>
-                    <td>Data 5</td>
-                    <td>Data 6</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <form class="row g-3 needs-validation" novalidate>
-        <div class="col-md-4">
-            <label for="validationCustom01" class="form-label">First name</label>
-            <input type="text" class="form-control" id="validationCustom01" required>
-        </div>
-        <div class="col-md-4">
-            <label for="validationCustom02" class="form-label">Last name</label>
-            <input type="text" class="form-control" id="validationCustom02" required>
-        </div>
-        <div class="col-12">
-            <button class="btn btn-primary" type="submit">Submit form</button>
-        </div>
-    </form>
-</body> -->
+{{template "headStyles" .}}
 
 <body>
-    <div class="sidebar">
-        <h2>GORM admin</h2>
-        <p class="section-title">Models</p>
-        <ul>
-             {{range .Models}}
-                 <li class="sidebar-item-title"><span></span><a href="{{.DetailURL}}">{{.Name}}</a></li>
-             {{end}}
-        </ul>
-
-        <p class="section-title">Another section</p>
-        <ul>
-            <li class="sidebar-item-title"><span></span><a href="#">Some option</a></li>
-            <li class="sidebar-item-title"><span></span><a href="#">Some option</a></li>
-            <li class="sidebar-item-title"><span></span><a href="#">Some option</a></li>
-            <li class="sidebar-item-title"><span></span><a href="#">Some option</a></li>
-            <li class="sidebar-item-title"><span></span><a href="#">Some option</a></li>
-
-        </ul>
-    </div>
+    {{template "sidebar" .}}
     <div class="main-content">
         <h1>Main Content</h1>
         <table>

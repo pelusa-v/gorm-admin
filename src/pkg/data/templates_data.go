@@ -5,11 +5,17 @@ import (
 	"reflect"
 )
 
+type SideBarData struct {
+	AdminName string
+	Models    []Model
+}
+
 type HomePageData struct {
-	Models []Model
+	SideBarData
 }
 
 type ModelDetailPageData struct {
+	SideBarData
 	Model              string
 	ModelObjects       []ModelObject
 	ModelObjectsFields []reflect.StructField
@@ -17,6 +23,7 @@ type ModelDetailPageData struct {
 }
 
 type ModelObjectDetailPageData struct {
+	SideBarData
 	Model       string
 	ModelObject ModelObject
 	PreviousURL string
@@ -36,21 +43,35 @@ func (item *Model) DetailURL() string {
 	return fmt.Sprintf("/admin/%s", item.Name)
 }
 
-func GetHomePageData(modelTypes *[]reflect.Type) HomePageData {
-	data := HomePageData{}
-	modelsList := make([]Model, len(*modelTypes))
-	for i, modelType := range *modelTypes {
+func (manager *TemplateManager) GetSidebarModels() []Model {
+	modelsList := make([]Model, len(*manager.configurableData.Models))
+	for i, modelType := range *manager.configurableData.Models {
 		model := Model{Name: modelType.Name()}
 		modelsList[i] = model
 	}
-	data.Models = modelsList
+	return modelsList
+}
+
+func (manager *TemplateManager) GetSidebarName() string {
+	if *manager.configurableData.Name == "" {
+		return "GORM admin"
+	}
+	return *manager.configurableData.Name
+}
+
+func (manager *TemplateManager) GetHomePageData() HomePageData {
+	data := HomePageData{}
+	data.Models = manager.GetSidebarModels()
+	data.AdminName = manager.GetSidebarName()
 	return data
 }
 
-func GetModelDetailPageData(model DbModel) ModelDetailPageData {
+func (manager *TemplateManager) GetModelDetailPageData(model DbModel) ModelDetailPageData {
 	modelType := model.modelType
 	modelFields := GetObjectFields(modelType)
 	data := ModelDetailPageData{Model: modelType.Name(), ModelObjectsFields: modelFields, PreviousURL: "/admin"}
+	data.Models = manager.GetSidebarModels()
+	data.AdminName = manager.GetSidebarName()
 
 	var modelObjects []ModelObject
 	objects := model.ListObjects()
@@ -63,10 +84,12 @@ func GetModelDetailPageData(model DbModel) ModelDetailPageData {
 	return data
 }
 
-func GetModelObjectDetailPageData(model DbModel, pk string) ModelObjectDetailPageData {
+func (manager *TemplateManager) GetModelObjectDetailPageData(model DbModel, pk string) ModelObjectDetailPageData {
 	object := model.GetObject(pk)
 	data := ModelObjectDetailPageData{Model: model.modelType.Name(), ModelObject: MapModelObject(object),
 		PreviousURL: fmt.Sprintf("/admin/%s", model.modelType.Name())}
+	data.Models = manager.GetSidebarModels()
+	data.AdminName = manager.GetSidebarName()
 	return data
 }
 
@@ -85,44 +108,4 @@ func MapModelObject(o interface{}) ModelObject {
 		FieldsValues: objectFieldsValues,
 		DetailURL:    fmt.Sprintf("/admin/%s/%v", objectValue.Type().Name(), objectValue.FieldByName(pkField.Name)),
 	}
-}
-
-func GetObjectFieldsValues(objectValue reflect.Value) []reflect.Value {
-	if objectValue.Kind() == reflect.Ptr {
-		objectValue = objectValue.Elem()
-	}
-
-	var objectFieldsValues []reflect.Value
-
-	objectType := objectValue.Type()
-	for i := 0; i < objectValue.NumField(); i++ {
-		fieldType := objectType.Field(i)
-		fieldValue := objectValue.Field(i)
-
-		if FieldHasEmbeddedStructs(fieldType) {
-			embeddedFieldsValues := GetObjectFieldsValues(fieldValue)
-			objectFieldsValues = append(objectFieldsValues, embeddedFieldsValues...)
-		} else {
-			objectFieldsValues = append(objectFieldsValues, fieldValue)
-		}
-	}
-
-	return objectFieldsValues
-}
-
-func GetObjectFields(objectType reflect.Type) []reflect.StructField {
-	var objectFields []reflect.StructField
-
-	for i := 0; i < objectType.NumField(); i++ {
-		fieldType := objectType.Field(i)
-
-		if FieldHasEmbeddedStructs(fieldType) {
-			embeddedFields := GetObjectFields(fieldType.Type)
-			objectFields = append(objectFields, embeddedFields...)
-		} else {
-			objectFields = append(objectFields, fieldType)
-		}
-	}
-
-	return objectFields
 }

@@ -22,6 +22,7 @@ type Admin struct {
 	TemplatesFs embed.FS
 	Models      []reflect.Type
 	GormDB      *gorm.DB
+	Name        string
 }
 
 func NewFiberAdmin(app *fiber.App, db *gorm.DB) *Admin {
@@ -69,4 +70,8 @@ func (admin *Admin) RegisterModel(model any) {
 
 	admin.registerModelDetailPage(modelType)
 	admin.registerModelObjectDetailPage(modelType)
+}
+
+func (admin *Admin) Configure(name string) {
+	admin.Name = name
 }
