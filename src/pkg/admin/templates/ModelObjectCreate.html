@@ -5,9 +5,11 @@
 <body>
     {{template "sidebar" .}}
     <div class="main-content">
+        <h3><a href="{{ .PreviousURL}}">Go back</a></h3>
+        <h2>Model: {{.Model}}</h2>
         <div class="form-container">
             <form action="/submit" method="POST">
-                <h2>Registration Form</h2>
+                <h2>Create new object</h2>
                 <div class="input-group">
                     <label for="name">Name:</label>
                     <input type="text" id="name" name="name" required>

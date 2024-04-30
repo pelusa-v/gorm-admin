@@ -20,12 +20,19 @@ type ModelDetailPageData struct {
 	ModelObjects       []ModelObject
 	ModelObjectsFields []reflect.StructField
 	PreviousURL        string
+	AddURL             string
 }
 
 type ModelObjectDetailPageData struct {
 	SideBarData
 	Model       string
 	ModelObject ModelObject
+	PreviousURL string
+}
+
+type ModelObjectCreatePageData struct {
+	SideBarData
+	Model       string
 	PreviousURL string
 }
 
@@ -69,7 +76,8 @@ func (manager *TemplateManager) GetHomePageData() HomePageData {
 func (manager *TemplateManager) GetModelDetailPageData(model DbModel) ModelDetailPageData {
 	modelType := model.modelType
 	modelFields := GetObjectFields(modelType)
-	data := ModelDetailPageData{Model: modelType.Name(), ModelObjectsFields: modelFields, PreviousURL: "/admin"}
+	data := ModelDetailPageData{Model: modelType.Name(), ModelObjectsFields: modelFields, PreviousURL: "/admin",
+		AddURL: fmt.Sprintf("/admin/%s/actions/create", model.modelType.Name())}
 	data.Models = manager.GetSidebarModels()
 	data.AdminName = manager.GetSidebarName()
 
@@ -88,6 +96,13 @@ func (manager *TemplateManager) GetModelObjectDetailPageData(model DbModel, pk s
 	object := model.GetObject(pk)
 	data := ModelObjectDetailPageData{Model: model.modelType.Name(), ModelObject: MapModelObject(object),
 		PreviousURL: fmt.Sprintf("/admin/%s", model.modelType.Name())}
+	data.Models = manager.GetSidebarModels()
+	data.AdminName = manager.GetSidebarName()
+	return data
+}
+
+func (manager *TemplateManager) GetModelObjectCreatePageData(model DbModel) ModelObjectCreatePageData {
+	data := ModelObjectCreatePageData{Model: model.modelType.Name(), PreviousURL: fmt.Sprintf("/admin/%s", model.modelType.Name())}
 	data.Models = manager.GetSidebarModels()
 	data.AdminName = manager.GetSidebarName()
 	return data

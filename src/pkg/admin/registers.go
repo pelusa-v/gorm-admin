@@ -42,6 +42,17 @@ func (admin *Admin) registerModelObjectDetailPage(modelType reflect.Type) {
 	})
 }
 
+func (admin *Admin) registerModelObjectCreatePage(modelType reflect.Type) {
+	dbModel := data.NewDbModel(modelType, admin.GormDB)
+	templates := admin.template("templates/*.html")
+	templateManager := data.NewTemplateManager(&admin.Name, &admin.Models)
+	modelObjectCreatePageRoute := fmt.Sprintf("/admin/%s/actions/create", modelType.Name())
+
+	admin.Handler.RegisterSimplePage(templates, "ModelObjectCreate.html", modelObjectCreatePageRoute, func() any {
+		return templateManager.GetModelObjectCreatePageData(*dbModel)
+	})
+}
+
 func (admin *Admin) registerModelObjectCreateEndpoint(modelType reflect.Type) {
 	dbModel := data.NewDbModel(modelType, admin.GormDB)
 	modelObjectCreateRoute := fmt.Sprintf("/admin/%s/create", modelType.Name())

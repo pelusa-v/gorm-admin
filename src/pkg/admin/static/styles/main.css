@@ -86,6 +86,7 @@ ul, ol {
 
 .model-detail-table {
   font-size: 13.5px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 .sidebar-line {
@@ -103,6 +104,8 @@ ul, ol {
 
 
 .form-container {
+  justify-content: center;
+  align-self: center;
   background: white;
   padding: 20px;
   border-radius: 8px;
@@ -157,4 +160,14 @@ button {
 
 button:hover {
   background-color: #004494;
+}
+
+.table-button {
+  display: flex;
+  justify-content: flex-end;
+  width: 10%; /* Adjust width as needed */
+  margin: 20px auto; /* Centers the container on the page */
+  background: #f4f4f4; /* Background color for visibility */
+  padding: 20px; /* Padding around the content */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
 }

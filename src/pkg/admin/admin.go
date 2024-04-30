@@ -15,6 +15,7 @@ import (
 
 //go:embed templates/*
 //go:embed static/styles/*
+//go:embed static/js/*
 var AdminTemplates embed.FS
 
 type Admin struct {
@@ -70,6 +71,7 @@ func (admin *Admin) RegisterModel(model any) {
 
 	admin.registerModelDetailPage(modelType)
 	admin.registerModelObjectDetailPage(modelType)
+	admin.registerModelObjectCreatePage(modelType)
 	admin.registerModelObjectCreateEndpoint(modelType)
 }
 
