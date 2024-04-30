@@ -70,6 +70,7 @@ func (admin *Admin) RegisterModel(model any) {
 
 	admin.registerModelDetailPage(modelType)
 	admin.registerModelObjectDetailPage(modelType)
+	admin.registerModelObjectCreateEndpoint(modelType)
 }
 
 func (admin *Admin) Configure(name string) {

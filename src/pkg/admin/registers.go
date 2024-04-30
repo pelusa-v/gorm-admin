@@ -42,11 +42,11 @@ func (admin *Admin) registerModelObjectDetailPage(modelType reflect.Type) {
 	})
 }
 
-// func (admin *Admin) registerModelObjectCreateEndpoint(modelType reflect.Type) {
-// 	dbModel := data.NewDbModel(modelType, admin.GormDB)
-// 	templates := admin.template("templates/*.html")
-// 	templateManager := data.NewTemplateManager(&admin.Name, &admin.Models)
-// 	admin.Handler.RegisterSimplePage(templates, "home.html", "/admin", func() any {
-// 		return templateManager.GetHomePageData()
-// 	})
-// }
+func (admin *Admin) registerModelObjectCreateEndpoint(modelType reflect.Type) {
+	dbModel := data.NewDbModel(modelType, admin.GormDB)
+	modelObjectCreateRoute := fmt.Sprintf("/admin/%s/create", modelType.Name())
+	modelDetailPageRoute := fmt.Sprintf("/admin/%s", modelType.Name())
+	admin.Handler.RegisterCreateEndpoint(modelObjectCreateRoute, modelDetailPageRoute, func(data interface{}) {
+		dbModel.CreateObject(data)
+	})
+}
