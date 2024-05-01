@@ -142,16 +142,19 @@ h1,h2,h3,h4,h5 {
 
 label {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 2px;
   color: #666;
+  font-size: small;
 }
 
 input[type="text"],
 input[type="email"],
 input[type="password"],
+input[type="datetime-local"],
+input[type="number"],
 input[type="date"] {
   width: 100%;
-  padding: 8px;
+  padding: 5px;
   border: 1px solid #ddd;
   border-radius: 4px;
   box-sizing: border-box; /* includes padding and border in the element's width */
@@ -160,6 +163,8 @@ input[type="date"] {
 input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="password"]:focus,
+input[type="datetime-local"]:focus,
+input[type="number"]:focus,
 input[type="date"]:focus {
   border-color: #0056b3;
   outline: none;

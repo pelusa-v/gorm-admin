@@ -10,7 +10,7 @@
         <table class="model-detail-table">
             <thead>
                 <tr>
-                    <td>
+                    <td colspan="2">
                         Actions
                     </td>
                     {{range .ModelObjectsFields}}
@@ -21,9 +21,8 @@
             <tbody>
                 {{range .ModelObjects}}
                     <tr>
-                        <td>
-                            <a href="{{ .DetailURL}}">Go</a>
-                        </td>
+                        <td><a href="{{ .DetailURL}}">Go</a></td>
+                        <td><a href="{{ .DetailURL}}">Edit</a></td>
                         {{range .FieldsValues}}
                             <td>{{.}}</td>
                         {{end}}
