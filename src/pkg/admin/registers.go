@@ -55,9 +55,9 @@ func (admin *Admin) registerModelObjectCreatePage(modelType reflect.Type) {
 
 func (admin *Admin) registerModelObjectCreateEndpoint(modelType reflect.Type) {
 	dbModel := data.NewDbModel(modelType, admin.GormDB)
-	modelObjectCreateRoute := fmt.Sprintf("/admin/%s/create", modelType.Name())
+	modelObjectCreateRoute := fmt.Sprintf("/admin/%s/actions/create", modelType.Name())
 	modelDetailPageRoute := fmt.Sprintf("/admin/%s", modelType.Name())
-	admin.Handler.RegisterCreateEndpoint(modelObjectCreateRoute, modelDetailPageRoute, func(data interface{}) {
-		dbModel.CreateObject(data)
+	admin.Handler.RegisterCreateEndpoint(modelObjectCreateRoute, modelDetailPageRoute, func(data interface{}) error {
+		return dbModel.CreateObject(data)
 	})
 }

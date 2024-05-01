@@ -46,12 +46,17 @@ func (handler *FiberHandler) RegisterPkPage(tmpl *template.Template, templateNam
 	})
 }
 
-func (handler *FiberHandler) RegisterCreateEndpoint(route string, redirect string, actionCreateFunc func(data interface{})) {
+func (handler *FiberHandler) RegisterCreateEndpoint(route string, redirect string, actionCreateFunc func(data interface{}) error) {
 
 	RegisterFiberEndpoint(route, POST, handler, func(c *fiber.Ctx) error {
 		var dataToCreate interface{}
-		actionCreateFunc(c.BodyParser(dataToCreate))
-		return c.Redirect(redirect)
+		err := actionCreateFunc(c.BodyParser(dataToCreate))
+		if err != nil {
+			panic(err)
+			return c.SendStatus(500)
+		}
+		// return c.Redirect(redirect)
+		return c.SendStatus(200)
 	})
 }
 

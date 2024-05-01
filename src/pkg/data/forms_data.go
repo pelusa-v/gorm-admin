@@ -31,7 +31,7 @@ func (form *FormData) SetFormInputs(model *DbModel) {
 		input.Id = f.Name
 		input.Name = f.Name
 		input.Label = f.Name
-		input.Disabled = IsPkField(f)
+		// input.Disabled = IsPkField(f)
 		input.Type = GetHtmlInputType(f)
 		form.SimpleInputs = append(form.SimpleInputs, input)
 

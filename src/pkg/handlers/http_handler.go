@@ -23,5 +23,5 @@ func (handler *BuiltInHandler) RegisterPkPage(tmpl *template.Template, templateN
 func (handler *BuiltInHandler) RegisterStatic(fs fs.FS) {
 }
 
-func (handler *BuiltInHandler) RegisterCreateEndpoint(route string, redirect string, actionCreateFunc func(data interface{})) {
+func (handler *BuiltInHandler) RegisterCreateEndpoint(route string, redirect string, actionCreateFunc func(data interface{}) error) {
 }
