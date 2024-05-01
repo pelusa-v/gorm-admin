@@ -8,27 +8,24 @@
         <h3><a class="go-back-button" href="{{ .PreviousURL}}">Go back</a></h3>
         <h2>Model: <strong>{{.Model}}</strong></h2>
         <div class="form-container">
-            <form class="create-form ">
+            <form class="create-form">
                 <h3>Create new <strong>{{.Model}}</strong></h3>
-                <div class="input-group">
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-                <div class="input-group">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="input-group">
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-                <div class="input-group">
-                    <label for="dob">Date of Birth:</label>
-                    <input type="date" id="dob" name="dob">
-                </div>
-                <div class="input-group">
-                    <button type="submit">Submit</button>
-                </div>
+                {{range .CreateObjectForm.SimpleInputs}}
+                    <div class="input-group">
+                        <label for="{{.Label}}">{{.Label}}</label>
+                        {{if .Disabled}}
+                            <input type="{{.Type}}" id="{{.Id}}" name="{{.Name}}" required disabled>
+                        {{else}}
+                            <input type="{{.Type}}" id="{{.Id}}" name="{{.Name}}" required>
+                        {{end}}
+                    </div>
+                {{end}}
+                {{range .CreateObjectForm.SelectInputs}}
+                    <div class="input-group">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                {{end}}
             </form>
         </div>
     </div>

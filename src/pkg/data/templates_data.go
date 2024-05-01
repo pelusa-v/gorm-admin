@@ -37,36 +37,6 @@ type ModelObjectCreatePageData struct {
 	CreateObjectForm FormData
 }
 
-type FormData struct {
-	TextInputs []TextInput
-}
-
-type BaseInput struct {
-	Id      string
-	Label   string
-	Name    string
-	Blocked bool
-}
-
-type TextInput struct {
-	BaseInput
-}
-
-type DateInput struct {
-	BaseInput
-}
-
-type SelectInput struct {
-	BaseInput
-	Options []SelectInputOption
-}
-
-type SelectInputOption struct {
-	Label string
-	Name  string
-	Value string
-}
-
 type ModelObject struct {
 	Fields       []reflect.StructField
 	FieldsValues []reflect.Value
@@ -133,7 +103,14 @@ func (manager *TemplateManager) GetModelObjectDetailPageData(model DbModel, pk s
 }
 
 func (manager *TemplateManager) GetModelObjectCreatePageData(model DbModel) ModelObjectCreatePageData {
-	data := ModelObjectCreatePageData{Model: model.modelType.Name(), PreviousURL: fmt.Sprintf("/admin/%s", model.modelType.Name())}
+	templateForm := &FormData{
+		SimpleInputs: make([]SimpleInput, 0),
+		SelectInputs: make([]SelectInput, 0),
+	}
+	templateForm.SetFormInputs(&model)
+
+	data := ModelObjectCreatePageData{Model: model.modelType.Name(), PreviousURL: fmt.Sprintf("/admin/%s", model.modelType.Name()),
+		CreateObjectForm: *templateForm}
 	data.Models = manager.GetSidebarModels()
 	data.AdminName = manager.GetSidebarName()
 	return data
