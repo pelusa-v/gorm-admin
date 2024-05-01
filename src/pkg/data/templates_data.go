@@ -32,8 +32,39 @@ type ModelObjectDetailPageData struct {
 
 type ModelObjectCreatePageData struct {
 	SideBarData
-	Model       string
-	PreviousURL string
+	Model            string
+	PreviousURL      string
+	CreateObjectForm FormData
+}
+
+type FormData struct {
+	TextInputs []TextInput
+}
+
+type BaseInput struct {
+	Id      string
+	Label   string
+	Name    string
+	Blocked bool
+}
+
+type TextInput struct {
+	BaseInput
+}
+
+type DateInput struct {
+	BaseInput
+}
+
+type SelectInput struct {
+	BaseInput
+	Options []SelectInputOption
+}
+
+type SelectInputOption struct {
+	Label string
+	Name  string
+	Value string
 }
 
 type ModelObject struct {

@@ -5,7 +5,7 @@
 <body>
     {{template "sidebar" .}}
     <div class="main-content">
-        <h3><a href="{{ .PreviousURL}}">Go back</a></h3>
+        <h3><a class="go-back-button" href="{{ .PreviousURL}}">Go back</a></h3>
         <h2>Model: {{.Model}}</h2>
 
         <table>
