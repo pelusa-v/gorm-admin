@@ -8,7 +8,7 @@
         <h3><a class="go-back-button" href="{{ .PreviousURL}}">Go back</a></h3>
         <h2>Model: <strong>{{.Model}}</strong></h2>
         <div class="form-container">
-            <form class="create-form">
+            <form class="create-form" id="createForm">
                 <h3>Create new <strong>{{.Model}}</strong></h3>
                 {{range .CreateObjectForm.SimpleInputs}}
                     <div class="input-group">
@@ -26,9 +26,60 @@
                         <input type="text" id="name" name="name" required>
                     </div>
                 {{end}}
+
+                <button type="submit" id="createObject" class="">
+                    Submit
+                </button>
             </form>
         </div>
     </div>
-    
 </body>
+
+<script>
+    document.getElementById("createObject").addEventListener("click", (e) => {
+        e.preventDefault();
+
+        let object = {}
+        "{{range .CreateObjectForm.SimpleInputs}}"
+        objectField = document.getElementById("{{.Id}}")
+        
+        if(objectField.type === "number") {
+            object["{{.Id}}"] = parseInt(objectField.value)
+        } else {
+            object["{{.Id}}"] = objectField.value
+        }
+        "{{end}}"
+
+        console.log(object)
+
+        fetch('{{ .CreateObjectURL}}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(object)
+        })
+        .then(response => {
+            console.log(response)
+            if(response.status === 201) {
+                window.location.href = "{{ .RedirectAfterCreateURL}}"
+            }
+            return response.json()
+        })
+        .catch(err => {
+            return err.json()
+        })
+        .then(json => {
+            console.log(json)
+            const formDiv = document.getElementById("createForm")
+            const errorMessage = document.createElement('div');
+            errorMessage.innerHTML = json["error"]
+            errorMessage.style.color = 'red';
+            errorMessage.style.border = '1px solid black';
+            errorMessage.style.padding = '10px';
+            errorMessage.style.marginTop = '10px';
+            formDiv.appendChild(errorMessage);
+        })
+    })
+</script>
 </html>

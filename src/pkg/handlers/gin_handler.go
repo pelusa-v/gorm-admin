@@ -24,5 +24,5 @@ func (handler *GinHandler) RegisterPkPage(tmpl *template.Template, templateName 
 func (handler *GinHandler) RegisterStatic(fs fs.FS) {
 }
 
-func (handler *GinHandler) RegisterCreateEndpoint(route string, redirect string, typeToCreate reflect.Type, actionCreateFunc func(data interface{}) error) {
+func (handler *GinHandler) RegisterCreateEndpoint(route string, typeToCreate reflect.Type, actionCreateFunc func(data interface{}) error) {
 }

@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"bytes"
+	"fmt"
 	"html/template"
 	"io/fs"
 	"net/http"
@@ -47,7 +48,7 @@ func (handler *FiberHandler) RegisterPkPage(tmpl *template.Template, templateNam
 	})
 }
 
-func (handler *FiberHandler) RegisterCreateEndpoint(route string, redirect string, typeToCreate reflect.Type, actionCreateFunc func(data interface{}) error) {
+func (handler *FiberHandler) RegisterCreateEndpoint(route string, typeToCreate reflect.Type, actionCreateFunc func(data interface{}) error) {
 
 	RegisterFiberEndpoint(route, POST, handler, func(c *fiber.Ctx) error {
 		dataToCreate := reflect.New(typeToCreate).Elem()
@@ -58,10 +59,16 @@ func (handler *FiberHandler) RegisterCreateEndpoint(route string, redirect strin
 
 		err := actionCreateFunc(dataToCreate.Interface())
 		if err != nil {
-			panic(err)
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+				"error": err.Error(),
+			})
 		}
-		return c.Redirect(redirect, 201)
-		// return c.SendStatus(200)
+
+		fmt.Println("Created...")
+		return c.SendStatus(201)
+		// return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+		// 	"error": "ERROR BITCH 2",
+		// })
 	})
 }
 

@@ -32,9 +32,11 @@ type ModelObjectDetailPageData struct {
 
 type ModelObjectCreatePageData struct {
 	SideBarData
-	Model            string
-	PreviousURL      string
-	CreateObjectForm FormData
+	Model                  string
+	PreviousURL            string
+	CreateObjectForm       FormData
+	CreateObjectURL        string
+	RedirectAfterCreateURL string
 }
 
 type ModelObject struct {
@@ -110,7 +112,8 @@ func (manager *TemplateManager) GetModelObjectCreatePageData(model DbModel) Mode
 	templateForm.SetFormInputs(&model)
 
 	data := ModelObjectCreatePageData{Model: model.modelType.Name(), PreviousURL: fmt.Sprintf("/admin/%s", model.modelType.Name()),
-		CreateObjectForm: *templateForm}
+		CreateObjectURL: fmt.Sprintf("/admin/%s/actions/create", model.modelType.Name()), CreateObjectForm: *templateForm,
+		RedirectAfterCreateURL: fmt.Sprintf("/admin/%s", model.modelType.Name())}
 	data.Models = manager.GetSidebarModels()
 	data.AdminName = manager.GetSidebarName()
 	return data
