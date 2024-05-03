@@ -3,13 +3,14 @@ package handlers
 import (
 	"html/template"
 	"io/fs"
+	"reflect"
 )
 
 type AppHandler interface {
 	RegisterSimplePage(tmpl *template.Template, templateName string, route string, tmplDataFunc func() any)
 	RegisterPkPage(tmpl *template.Template, templateName string, route string, tmplDataFunc func(pk string) any)
 	RegisterStatic(fs fs.FS)
-	RegisterCreateEndpoint(route string, redirect string, actionCreateFunc func(data interface{}) error)
+	RegisterCreateEndpoint(route string, redirect string, typeToCreate reflect.Type, actionCreateFunc func(data interface{}) error)
 	// RegisterHomePage(tmpl *template.Template)
 	// RegisterModelDetailPage(modelType reflect.Type, tmpl *template.Template)
 }

@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"io/fs"
 	"net/http"
+	"reflect"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
@@ -46,17 +47,21 @@ func (handler *FiberHandler) RegisterPkPage(tmpl *template.Template, templateNam
 	})
 }
 
-func (handler *FiberHandler) RegisterCreateEndpoint(route string, redirect string, actionCreateFunc func(data interface{}) error) {
+func (handler *FiberHandler) RegisterCreateEndpoint(route string, redirect string, typeToCreate reflect.Type, actionCreateFunc func(data interface{}) error) {
 
 	RegisterFiberEndpoint(route, POST, handler, func(c *fiber.Ctx) error {
-		var dataToCreate interface{}
-		err := actionCreateFunc(c.BodyParser(dataToCreate))
+		dataToCreate := reflect.New(typeToCreate).Elem()
+
+		if err := c.BodyParser(dataToCreate.Addr().Interface()); err != nil {
+			panic(err)
+		}
+
+		err := actionCreateFunc(dataToCreate.Interface())
 		if err != nil {
 			panic(err)
-			return c.SendStatus(500)
 		}
-		// return c.Redirect(redirect)
-		return c.SendStatus(200)
+		return c.Redirect(redirect, 201)
+		// return c.SendStatus(200)
 	})
 }
 

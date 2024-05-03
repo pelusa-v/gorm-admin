@@ -3,6 +3,7 @@ package handlers
 import (
 	"html/template"
 	"io/fs"
+	"reflect"
 )
 
 type BuiltInHandler struct {
@@ -23,5 +24,5 @@ func (handler *BuiltInHandler) RegisterPkPage(tmpl *template.Template, templateN
 func (handler *BuiltInHandler) RegisterStatic(fs fs.FS) {
 }
 
-func (handler *BuiltInHandler) RegisterCreateEndpoint(route string, redirect string, actionCreateFunc func(data interface{}) error) {
+func (handler *BuiltInHandler) RegisterCreateEndpoint(route string, redirect string, typeToCreate reflect.Type, actionCreateFunc func(data interface{}) error) {
 }
