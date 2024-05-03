@@ -30,6 +30,8 @@
                 <button type="submit" id="createObject" class="">
                     Submit
                 </button>
+
+                <div class="error-message hidden" id="errorMessage"></div>
             </form>
         </div>
     </div>
@@ -70,15 +72,9 @@
             return err.json()
         })
         .then(json => {
-            console.log(json)
-            const formDiv = document.getElementById("createForm")
-            const errorMessage = document.createElement('div');
-            errorMessage.innerHTML = json["error"]
-            errorMessage.style.color = 'red';
-            errorMessage.style.border = '1px solid black';
-            errorMessage.style.padding = '10px';
-            errorMessage.style.marginTop = '10px';
-            formDiv.appendChild(errorMessage);
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.textContent = json["error"]
+            errorMessage.classList.remove("hidden")
         })
     })
 </script>

@@ -195,3 +195,16 @@ button:hover {
 .form-division {
   width: 80%;
 }
+
+.hidden {
+  display: none;
+}
+
+.error-message {
+  color: rgba(176, 63, 63, 0.838);
+  border: 3px solid rgb(196, 54, 54);
+  background-color: rgb(221, 134, 134);
+  border-radius: 7px;
+  padding: 10px;
+  margin-top: 10px;
+}

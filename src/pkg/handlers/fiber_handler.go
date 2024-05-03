@@ -66,25 +66,8 @@ func (handler *FiberHandler) RegisterCreateEndpoint(route string, typeToCreate r
 
 		fmt.Println("Created...")
 		return c.SendStatus(201)
-		// return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-		// 	"error": "ERROR BITCH 2",
-		// })
 	})
 }
-
-// func (handler *FiberHandler) RegisterCreateEndpoint2(route string, redirect string, typeToCreate reflect.Type, fieldsToExtract []string,
-// 	actionCreateFunc func(reflect.Type, map[string]interface{}) any) {
-
-// 	handler.App.Get(route, func(c *fiber.Ctx) error {
-// 		formfields := make(map[string]interface{}, len(fieldsToExtract))
-// 		for _, f := range fieldsToExtract {
-// 			formfields[f] = c.FormValue(f)
-// 		}
-
-// 		actionCreateFunc(typeToCreate, formfields)
-// 		return c.Redirect(redirect)
-// 	})
-// }
 
 func (handler *FiberHandler) RegisterStatic(fs fs.FS) {
 	handler.App.Use("/gorm-admin-statics", filesystem.New(filesystem.Config{
