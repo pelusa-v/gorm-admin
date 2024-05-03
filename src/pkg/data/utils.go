@@ -1,6 +1,7 @@
 package data
 
 import (
+	"encoding/json"
 	"reflect"
 	"time"
 
@@ -101,3 +102,14 @@ func GetObjectFields(objectType reflect.Type) []reflect.StructField {
 // 	}
 // 	return names
 // }
+
+func GetObjectInstanceFromBytes(data []byte, typ reflect.Type) (interface{}, error) {
+	instancePtr := reflect.New(typ).Interface() // Create a new pointer to a type instance
+
+	err := json.Unmarshal(data, instancePtr) // Unmarshal into the pointer
+	if err != nil {
+		return nil, err
+	}
+
+	return instancePtr, nil
+}

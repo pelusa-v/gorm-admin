@@ -10,6 +10,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
+	"github.com/pelusa-v/gorm-admin/src/pkg/data"
 )
 
 type FiberHandler struct {
@@ -37,7 +38,6 @@ func (handler *FiberHandler) RegisterPkPage(tmpl *template.Template, templateNam
 		pk := c.Params("pk")
 
 		var tmplOutput bytes.Buffer
-		// err := tmpl.Execute(&tmplOutput, tmplDataFunc(pk))
 		err := tmpl.ExecuteTemplate(&tmplOutput, templateName, tmplDataFunc(pk))
 		if err != nil {
 			panic(err)
@@ -51,13 +51,22 @@ func (handler *FiberHandler) RegisterPkPage(tmpl *template.Template, templateNam
 func (handler *FiberHandler) RegisterCreateEndpoint(route string, typeToCreate reflect.Type, actionCreateFunc func(data interface{}) error) {
 
 	RegisterFiberEndpoint(route, POST, handler, func(c *fiber.Ctx) error {
-		dataToCreate := reflect.New(typeToCreate).Elem()
+		// dataToCreate := reflect.New(typeToCreate).Elem()
+		// fmt.Println(dataToCreate)
+		// fmt.Println(string(c.Body()))
+		// if err := c.BodyParser(dataToCreate.Addr().Interface()); err != nil {
+		// 	panic(err)
+		// }
 
-		if err := c.BodyParser(dataToCreate.Addr().Interface()); err != nil {
-			panic(err)
+		dataToCreate, err := data.GetObjectInstanceFromBytes(c.Body(), typeToCreate)
+		if err != nil {
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+				"error": "Cannot parse JSON",
+			})
 		}
+		fmt.Println(dataToCreate)
 
-		err := actionCreateFunc(dataToCreate.Interface())
+		err = actionCreateFunc(dataToCreate)
 		if err != nil {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 				"error": err.Error(),

@@ -47,7 +47,7 @@
         
         if(objectField.type === "number") {
             object["{{.Id}}"] = parseInt(objectField.value)
-        } else {
+        } else if(objectField.value !== "") {
             object["{{.Id}}"] = objectField.value
         }
         "{{end}}"
@@ -63,7 +63,7 @@
         })
         .then(response => {
             console.log(response)
-            if(response.status === 201) {
+            if(response.status >= 200) {
                 window.location.href = "{{ .RedirectAfterCreateURL}}"
             }
             return response.json()
