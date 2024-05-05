@@ -40,9 +40,11 @@ type ModelObjectCreatePageData struct {
 }
 
 type ModelObject struct {
+	Pk           interface{}
 	Fields       []reflect.StructField
 	FieldsValues []reflect.Value
 	DetailURL    string
+	DeleteURL    string
 }
 
 type Model struct {
@@ -133,5 +135,7 @@ func MapModelObject(o interface{}) ModelObject {
 		Fields:       objectFields,
 		FieldsValues: objectFieldsValues,
 		DetailURL:    fmt.Sprintf("/admin/%s/%v", objectValue.Type().Name(), objectValue.FieldByName(pkField.Name)),
+		DeleteURL:    fmt.Sprintf("/admin/%s/actions/delete/%v", objectValue.Type().Name(), objectValue.FieldByName(pkField.Name)),
+		Pk:           objectValue.FieldByName(pkField.Name),
 	}
 }

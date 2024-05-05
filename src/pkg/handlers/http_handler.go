@@ -26,3 +26,6 @@ func (handler *BuiltInHandler) RegisterStatic(fs fs.FS) {
 
 func (handler *BuiltInHandler) RegisterCreateEndpoint(route string, typeToCreate reflect.Type, actionCreateFunc func(data interface{}) error) {
 }
+
+func (handler *BuiltInHandler) RegisterDeleteEndpoint(route string, actionFunc func(pk interface{}) error) {
+}

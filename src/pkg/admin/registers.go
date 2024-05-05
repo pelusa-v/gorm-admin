@@ -60,3 +60,11 @@ func (admin *Admin) registerModelObjectCreateEndpoint(modelType reflect.Type) {
 		return dbModel.CreateObject(data)
 	})
 }
+
+func (admin *Admin) registerModelObjectDeleteEndpoint(modelType reflect.Type) {
+	dbModel := data.NewDbModel(modelType, admin.GormDB)
+	modelObjectDeleteRoute := fmt.Sprintf("/admin/%s/actions/delete/:pk", modelType.Name())
+	admin.Handler.RegisterDeleteEndpoint(modelObjectDeleteRoute, func(pk interface{}) error {
+		return dbModel.DeleteObject(pk)
+	})
+}

@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"bytes"
-	"fmt"
 	"html/template"
 	"io/fs"
 	"net/http"
@@ -20,7 +19,8 @@ type FiberHandler struct {
 
 // Handle /admin/Product/1 route, (:id)
 func (handler *FiberHandler) RegisterSimplePage(tmpl *template.Template, templateName string, route string, tmplDataFunc func() any) {
-	handler.App.Get(route, func(c *fiber.Ctx) error {
+
+	registerFiberEndpoint(route, GET, handler, func(c *fiber.Ctx) error {
 		var tmplOutput bytes.Buffer
 		// err := tmpl.Execute(&tmplOutput, tmplDataFunc())
 		err := tmpl.ExecuteTemplate(&tmplOutput, templateName, tmplDataFunc())
@@ -34,7 +34,8 @@ func (handler *FiberHandler) RegisterSimplePage(tmpl *template.Template, templat
 }
 
 func (handler *FiberHandler) RegisterPkPage(tmpl *template.Template, templateName string, route string, tmplDataFunc func(pk string) any) {
-	handler.App.Get(route, func(c *fiber.Ctx) error {
+
+	registerFiberEndpoint(route, GET, handler, func(c *fiber.Ctx) error {
 		pk := c.Params("pk")
 
 		var tmplOutput bytes.Buffer
@@ -48,33 +49,41 @@ func (handler *FiberHandler) RegisterPkPage(tmpl *template.Template, templateNam
 	})
 }
 
-func (handler *FiberHandler) RegisterCreateEndpoint(route string, typeToCreate reflect.Type, actionCreateFunc func(data interface{}) error) {
+func (handler *FiberHandler) RegisterCreateEndpoint(route string, typeToCreate reflect.Type, actionFunc func(data interface{}) error) {
 
-	RegisterFiberEndpoint(route, POST, handler, func(c *fiber.Ctx) error {
-		// dataToCreate := reflect.New(typeToCreate).Elem()
-		// fmt.Println(dataToCreate)
-		// fmt.Println(string(c.Body()))
-		// if err := c.BodyParser(dataToCreate.Addr().Interface()); err != nil {
-		// 	panic(err)
-		// }
-
+	registerFiberEndpoint(route, POST, handler, func(c *fiber.Ctx) error {
 		dataToCreate, err := data.GetObjectInstanceFromBytes(c.Body(), typeToCreate)
 		if err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 				"error": "Cannot parse JSON",
 			})
 		}
-		fmt.Println(dataToCreate)
+		// fmt.Println(dataToCreate)
 
-		err = actionCreateFunc(dataToCreate)
+		err = actionFunc(dataToCreate)
 		if err != nil {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 				"error": err.Error(),
 			})
 		}
 
-		fmt.Println("Created...")
+		// fmt.Println("Created...")
 		return c.SendStatus(201)
+	})
+}
+
+func (handler *FiberHandler) RegisterDeleteEndpoint(route string, actionFunc func(pk interface{}) error) {
+
+	registerFiberEndpoint(route, DELETE, handler, func(c *fiber.Ctx) error {
+		pk := c.Params("pk")
+		err := actionFunc(pk)
+		if err != nil {
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+				"error": err.Error(),
+			})
+		}
+
+		return c.SendStatus(200)
 	})
 }
 
@@ -84,7 +93,7 @@ func (handler *FiberHandler) RegisterStatic(fs fs.FS) {
 	}))
 }
 
-func RegisterFiberEndpoint(route string, method RequestMethod, appHandler *FiberHandler, controller fiber.Handler) {
+func registerFiberEndpoint(route string, method RequestMethod, appHandler *FiberHandler, controller fiber.Handler) {
 	switch method.Name {
 	case GET.Name:
 		appHandler.App.Get(route, controller)

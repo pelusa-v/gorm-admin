@@ -26,3 +26,6 @@ func (handler *GinHandler) RegisterStatic(fs fs.FS) {
 
 func (handler *GinHandler) RegisterCreateEndpoint(route string, typeToCreate reflect.Type, actionCreateFunc func(data interface{}) error) {
 }
+
+func (handler *GinHandler) RegisterDeleteEndpoint(route string, actionFunc func(pk interface{}) error) {
+}

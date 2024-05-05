@@ -21,9 +21,9 @@
             <tbody>
                 {{range .ModelObjects}}
                     <tr>
-                        <td><a href="{{ .DetailURL}}">Go</a></td>
-                        <td><a href="{{ .DetailURL}}">Edit</a></td>
-                        <td><a href="{{ .DetailURL}}">Delete</a></td>
+                        <td><a id="{{ .Pk}}-detail" href="{{ .DetailURL}}">Go</a></td>
+                        <td><a id="{{ .Pk}}-update" href="{{ .DetailURL}}">Edit</a></td>
+                        <td><a id="{{ .Pk}}-delete" href="#">Delete</a></td>
                         {{range .FieldsValues}}
                             <td>{{.}}</td>
                         {{end}}
@@ -36,4 +36,37 @@
         </div>
     </div>
 </body>
+
+<script>
+
+    "{{range .ModelObjects}}"
+    document.getElementById("{{ .Pk}}-delete").addEventListener("click", (e) => {
+        e.preventDefault();
+
+        fetch("{{ .DeleteURL}}", {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => {
+            console.log(response)
+            if(response.status >= 200) {
+                location.reload()
+            }
+            return response.json()
+        })
+        .catch(err => {
+            return err.json()
+        })
+        .then(json => {
+            console.log(json)
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.textContent = json["error"]
+            errorMessage.classList.remove("hidden")
+        })
+    })
+    "{{end}}"
+</script>
+
 </html>
