@@ -2,10 +2,11 @@
 <div id="{{.ModalId}}" class="general-modal">
     <div class="modal-content">
         <span class="close" id="{{.CloseModalId}}">&times;</span>
-        <h2>Modal Header</h2>
-        <p>{{.ModalId}}</p>
-        <p>{{.CloseModalId}}</p>
-        <p>{{.OpenModalId}}</p>
+        <h3>Are you sure you want to delete this object?</h3>
+        <div class="group-button-container">
+            <button id="{{.DeleteButtonId}}" type="button" class="btn-delete">Confirm</button>
+            <button id="cancel-{{.CloseModalId}}" type="button" class="btn">Cancel</button>
+        </div>
     </div>
 </div>
 
@@ -14,6 +15,10 @@
 // document.getElementById('{{.OpenModalId}}').onclick = function() {
 //     document.getElementById('{{.ModalId}}').style.display = "block";
 // }
+
+document.getElementById('cancel-{{.CloseModalId}}').onclick = function() {
+    document.getElementById('{{.ModalId}}').style.display = "none";
+}
 
 document.getElementById('{{.CloseModalId}}').onclick = function() {
     document.getElementById('{{.ModalId}}').style.display = "none";

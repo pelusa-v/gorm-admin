@@ -49,9 +49,10 @@ type ModelObject struct {
 }
 
 type DeleteObjectModalData struct {
-	ModalId      string
-	CloseModalId string
-	OpenModalId  string
+	ModalId        string
+	CloseModalId   string
+	OpenModalId    string
+	DeleteButtonId string
 }
 
 type Model struct {
@@ -98,9 +99,10 @@ func (manager *TemplateManager) GetModelDetailPageData(model DbModel) ModelDetai
 	for _, o := range objects {
 		modelObject := MapModelObject(o)
 		deleteModalData := DeleteObjectModalData{
-			ModalId:      fmt.Sprintf("delete-modal-%v", modelObject.Pk),
-			CloseModalId: fmt.Sprintf("close-delete-modal-%v", modelObject.Pk),
-			OpenModalId:  fmt.Sprintf("open-delete-modal-%v", modelObject.Pk),
+			ModalId:        fmt.Sprintf("delete-modal-%v", modelObject.Pk),
+			CloseModalId:   fmt.Sprintf("close-delete-modal-%v", modelObject.Pk),
+			OpenModalId:    fmt.Sprintf("open-delete-modal-%v", modelObject.Pk),
+			DeleteButtonId: fmt.Sprintf("delete-action-%v", modelObject.Pk),
 		}
 		modelObject.DeleteObjectModalData = deleteModalData
 		modelObjects = append(modelObjects, modelObject)

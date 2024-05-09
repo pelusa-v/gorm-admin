@@ -125,7 +125,7 @@ ul, ol {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
 }
 
-h2 {
+h2,h3 {
   text-align: center;
 }
 
@@ -226,7 +226,7 @@ button:hover {
   margin: 15% auto; /* 15% from the top and centered */
   padding: 20px;
   border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
+  width: 30%; /* Could be more or less, depending on screen size */
 }
 
 /* The Close Button */
@@ -243,3 +243,33 @@ button:hover {
   text-decoration: none;
   cursor: pointer;
 }
+
+
+
+.group-button-container {
+  display: flex;
+  text-align: center; /* Center align the buttons within the div */
+  padding: 20px; /* Add some padding around the buttons */
+}
+
+.btn {
+  margin: 5px; /* Space out the buttons */
+  padding: 10px 20px; /* Padding inside the buttons */
+  color: white; /* White text color */
+  border: none; /* No borders */
+  border-radius: 5px; /* Slightly rounded corners for a modern look */
+  cursor: pointer; /* Cursor indicates clickable items */
+  font-size: 16px; /* Larger text inside the buttons */
+}
+
+.btn-delete {
+  margin: 5px; /* Space out the buttons */
+  padding: 10px 20px; /* Padding inside the buttons */
+  color: white; /* White text color */
+  background-color: rgb(61, 164, 164);
+  border: none; /* No borders */
+  border-radius: 5px; /* Slightly rounded corners for a modern look */
+  cursor: pointer; /* Cursor indicates clickable items */
+  font-size: 16px; /* Larger text inside the buttons */
+}
+
