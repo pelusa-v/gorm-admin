@@ -27,29 +27,31 @@ th, td {
     text-align: left;
 }
 
-span {
-    border-bottom: 1px solid;
-      border-left: 1px solid;
-      height: 1rem;
-      width: 1.5rem;
-      display: inline-block;
-      margin-bottom: 0.3rem;
-      margin-left: 1rem;
-      margin-right: 2px;
-  }
+.models-tree {
+  font-size: 14px;
+  border-bottom: 1px solid;
+  border-left: 1px solid;
+  height: 1rem;
+  width: 1.5rem;
+  display: inline-block;
+  margin-bottom: 0.3rem;
+  margin-left: 1rem;
+  margin-right: 2px;
+}
 
-  @media screen and (max-width: 480px) {
-    span {
-      border-bottom: 1px solid;
-      border-left: 1px solid;
-      height: 1.4rem;
-      width: 2.5rem;
-      display: inline-block;
-      margin-bottom: 0.3rem;
-      margin-left: 1rem;
-      margin-right: 2px;
-    }
+@media screen and (max-width: 480px) {
+  .models-tree {
+    font-size: 14px;
+    border-bottom: 1px solid;
+    border-left: 1px solid;
+    height: 1.4rem;
+    width: 2.5rem;
+    display: inline-block;
+    margin-bottom: 0.3rem;
+    margin-left: 1rem;
+    margin-right: 2px;
   }
+}
 
   .sidebar-item-title {
     font-size: small;
@@ -77,10 +79,6 @@ ul, ol {
   padding-left: 5px;
   margin-left: 0;
   list-style-type: none; /* This removes bullets and numbers */
-}
-
-.models-tree {
-  font-size: 14px;
 }
 
 .section-title {
@@ -207,4 +205,41 @@ button:hover {
   border-radius: 7px;
   padding: 10px;
   margin-top: 10px;
+}
+
+.general-modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }

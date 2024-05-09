@@ -23,11 +23,18 @@
                     <tr>
                         <td><a id="{{ .Pk}}-detail" href="{{ .DetailURL}}">Go</a></td>
                         <td><a id="{{ .Pk}}-update" href="{{ .DetailURL}}">Edit</a></td>
-                        <td><a id="{{ .Pk}}-delete" href="#">Delete</a></td>
+                        <!-- <td><a id="{{ .Pk}}-delete" href="#">Delete</a></td> -->
+                        <td><span id="{{.DeleteObjectModalData.OpenModalId}}"><a href="#">Delete</a></span></td>
                         {{range .FieldsValues}}
                             <td>{{.}}</td>
                         {{end}}
                     </tr>
+                {{end}}
+
+                {{range .ModelObjects}}
+                    <!-- <button id="{{.DeleteObjectModalData.OpenModalId}}">Open Modal</button> -->
+                    <!-- {{.DeleteObjectModalData}} -->
+                    {{template "deleteObjectModal" .DeleteObjectModalData}}
                 {{end}}
             </tbody>
         </table>
@@ -40,32 +47,36 @@
 <script>
 
     "{{range .ModelObjects}}"
-    document.getElementById("{{ .Pk}}-delete").addEventListener("click", (e) => {
-        e.preventDefault();
+    document.getElementById('{{.DeleteObjectModalData.OpenModalId}}').onclick = function() {
+        document.getElementById('{{.DeleteObjectModalData.ModalId}}').style.display = "block";
+    }
 
-        fetch("{{ .DeleteURL}}", {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        .then(response => {
-            console.log(response)
-            if(response.status >= 200) {
-                location.reload()
-            }
-            return response.json()
-        })
-        .catch(err => {
-            return err.json()
-        })
-        .then(json => {
-            console.log(json)
-            const errorMessage = document.getElementById('errorMessage');
-            errorMessage.textContent = json["error"]
-            errorMessage.classList.remove("hidden")
-        })
-    })
+    // document.getElementById("{{ .Pk}}-delete").addEventListener("click", (e) => {
+    //     e.preventDefault();
+
+    //     fetch("{{ .DeleteURL}}", {
+    //         method: 'DELETE',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //     })
+    //     .then(response => {
+    //         console.log(response)
+    //         if(response.status >= 200) {
+    //             location.reload()
+    //         }
+    //         return response.json()
+    //     })
+    //     .catch(err => {
+    //         return err.json()
+    //     })
+    //     .then(json => {
+    //         console.log(json)
+    //         const errorMessage = document.getElementById('errorMessage');
+    //         errorMessage.textContent = json["error"]
+    //         errorMessage.classList.remove("hidden")
+    //     })
+    // })
     "{{end}}"
 </script>
 

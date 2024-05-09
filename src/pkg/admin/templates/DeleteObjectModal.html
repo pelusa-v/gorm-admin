@@ -1,0 +1,29 @@
+{{define "deleteObjectModal"}}
+<div id="{{.ModalId}}" class="general-modal">
+    <div class="modal-content">
+        <span class="close" id="{{.CloseModalId}}">&times;</span>
+        <h2>Modal Header</h2>
+        <p>{{.ModalId}}</p>
+        <p>{{.CloseModalId}}</p>
+        <p>{{.OpenModalId}}</p>
+    </div>
+</div>
+
+
+<script>
+// document.getElementById('{{.OpenModalId}}').onclick = function() {
+//     document.getElementById('{{.ModalId}}').style.display = "block";
+// }
+
+document.getElementById('{{.CloseModalId}}').onclick = function() {
+    document.getElementById('{{.ModalId}}').style.display = "none";
+}
+
+window.onclick = function(event) {
+    if (event.target.classList.contains('general-modal')) {
+        event.target.style.display = "none";
+    }
+}
+</script>
+
+{{end}}
