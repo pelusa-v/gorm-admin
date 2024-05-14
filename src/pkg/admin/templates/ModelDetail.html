@@ -19,19 +19,19 @@
                 </tr>
             </thead>
             <tbody>
-                {{range .ModelObjects}}
+                {{range .ModelObjectListItems}}
                     <tr>
-                        <td><a id="{{ .Pk}}-detail" href="{{ .DetailURL}}">Go</a></td>
-                        <td><a id="{{ .Pk}}-update" href="{{ .DetailURL}}">Edit</a></td>
-                        <!-- <td><a id="{{ .Pk}}-delete" href="#">Delete</a></td> -->
+                        <td><a id="{{ .ModelObject.Pk}}-detail" href="{{ .DetailURL}}">Go</a></td>
+                        <td><a id="{{ .ModelObject.Pk}}-update" href="{{ .DetailURL}}">Edit</a></td>
+                        <!-- <td><a id="{{ .ModelObject.Pk}}-delete" href="#">Delete</a></td> -->
                         <td><span id="{{.DeleteObjectModalData.OpenModalId}}"><a href="#">Delete</a></span></td>
-                        {{range .FieldsValues}}
+                        {{range .ModelObject.FieldsValues}}
                             <td>{{.}}</td>
                         {{end}}
                     </tr>
                 {{end}}
 
-                {{range .ModelObjects}}
+                {{range .ModelObjectListItems}}
                     <!-- <button id="{{.DeleteObjectModalData.OpenModalId}}">Open Modal</button> -->
                     <!-- {{.DeleteObjectModalData}} -->
                     {{template "deleteObjectModal" .DeleteObjectModalData}}
@@ -46,7 +46,7 @@
 
 <script>
 
-    "{{range .ModelObjects}}"
+    "{{range .ModelObjectListItems}}"
     document.getElementById('{{.DeleteObjectModalData.OpenModalId}}').onclick = function() {
         document.getElementById('{{.DeleteObjectModalData.ModalId}}').style.display = "block";
     }
