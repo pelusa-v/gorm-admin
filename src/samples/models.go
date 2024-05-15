@@ -31,7 +31,7 @@ type Author struct {
 	Name  string
 	Email string
 	// Hint  Hint `gorm:"embedded;embeddedPrefix:hint_"`
-	// Hint Hint `gorm:"embedded"`
+	Hint Hint `gorm:"embedded"`
 }
 
 type Blog struct {
