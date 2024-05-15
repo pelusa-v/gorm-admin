@@ -34,11 +34,5 @@ func (form *FormData) SetFormInputs(model *DbModel) {
 		// input.Disabled = IsPkField(f)
 		input.Type = GetHtmlInputType(f)
 		form.SimpleInputs = append(form.SimpleInputs, input)
-
-		// fmt.Println(f.Tag)
-		// fmt.Println(f.Name)
-		// fmt.Println(f.Index)
-		// fmt.Println(f.Type)
-		// fmt.Println("---------------")
 	}
 }
