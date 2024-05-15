@@ -42,8 +42,13 @@ func (m *DbModel) GetObject(pk string) interface{} {
 	return concreteObject
 }
 
-func (m *DbModel) CreateObject(newObject interface{}) error {
-	res := m.db.Create(newObject)
+// func (m *DbModel) CreateObject(newObject interface{}) error {
+// 	res := m.db.Create(newObject)
+// 	return res.Error
+// }
+
+func (m *DbModel) CreateObject(newObject interface{}, objectType reflect.Type) error {
+	res := m.db.Model(reflect.New(objectType).Interface()).Create(newObject)
 	return res.Error
 }
 

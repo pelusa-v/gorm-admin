@@ -3,7 +3,6 @@ package handlers
 import (
 	"html/template"
 	"io/fs"
-	"reflect"
 )
 
 type GinHandler struct {
@@ -24,7 +23,7 @@ func (handler *GinHandler) RegisterPkPage(tmpl *template.Template, templateName 
 func (handler *GinHandler) RegisterStatic(fs fs.FS) {
 }
 
-func (handler *GinHandler) RegisterCreateEndpoint(route string, typeToCreate reflect.Type, actionCreateFunc func(data interface{}) error) {
+func (handler *GinHandler) RegisterCreateEndpoint(route string, actionCreateFunc func(data interface{}) error) {
 }
 
 func (handler *GinHandler) RegisterDeleteEndpoint(route string, actionFunc func(pk interface{}) error) {

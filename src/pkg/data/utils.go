@@ -116,13 +116,14 @@ func GetObjectFields(objectType reflect.Type) []reflect.StructField {
 	return objectFields
 }
 
-func GetObjectInstanceFromBytes(data []byte, typ reflect.Type) (interface{}, error) {
-	instancePtr := reflect.New(typ).Interface() // Create a new pointer to a type instance
+func GetObjectInstanceFromBytes(data []byte) (interface{}, error) {
+	// instancePtr := reflect.New(typ).Interface() // Create a new pointer to a type instance
 
-	err := json.Unmarshal(data, instancePtr) // Unmarshal into the pointer
+	var instanceData map[string]interface{}
+	err := json.Unmarshal(data, &instanceData) // Unmarshal into the pointer
 	if err != nil {
 		return nil, err
 	}
 
-	return instancePtr, nil
+	return instanceData, nil
 }

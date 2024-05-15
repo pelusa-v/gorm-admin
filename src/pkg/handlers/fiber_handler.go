@@ -2,10 +2,10 @@ package handlers
 
 import (
 	"bytes"
+	"fmt"
 	"html/template"
 	"io/fs"
 	"net/http"
-	"reflect"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
@@ -49,16 +49,17 @@ func (handler *FiberHandler) RegisterPkPage(tmpl *template.Template, templateNam
 	})
 }
 
-func (handler *FiberHandler) RegisterCreateEndpoint(route string, typeToCreate reflect.Type, actionFunc func(data interface{}) error) {
+func (handler *FiberHandler) RegisterCreateEndpoint(route string, actionFunc func(data interface{}) error) {
 
 	registerFiberEndpoint(route, POST, handler, func(c *fiber.Ctx) error {
-		dataToCreate, err := data.GetObjectInstanceFromBytes(c.Body(), typeToCreate)
+		fmt.Println(c.Body())
+		dataToCreate, err := data.GetObjectInstanceFromBytes(c.Body())
 		if err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 				"error": "Cannot parse JSON",
 			})
 		}
-		// fmt.Println(dataToCreate)
+		fmt.Println(dataToCreate)
 
 		err = actionFunc(dataToCreate)
 		if err != nil {
