@@ -2,7 +2,10 @@ package data
 
 import (
 	"encoding/json"
+	"fmt"
 	"reflect"
+	"regexp"
+	"strings"
 	"time"
 
 	"gorm.io/gorm"
@@ -15,17 +18,31 @@ const HTML_INPUT_DATETIME_TYPE = "datetime-local"
 const HTML_INPUT_BOOL_TYPE = "checkbox"
 const HTML_INPUT_NUMBER_TYPE = "number"
 
-const GORM_PK_DEFAULT_TAG_NAME string = "gorm"
+const GORM_DEFAULT_TAG_NAME string = "gorm"
 const GORM_PK_DEFAULT_TAG_VALUE string = "primaryKey"
 const GORM_PK_DEFAULT_NAME string = "ID"
+const GORM_EMBEDDED_DEFAULT_TAG_VALUE string = "embedded"
+const GORM_EMBEDDED_PREFIX_DEFAULT_TAG_VALUE string = "embeddedPrefix"
 
 func FieldHasEmbeddedStructs(f reflect.StructField) bool {
-	// return f.Anonymous || f.Type == reflect.TypeOf(gorm.DeletedAt{})
-	return f.Anonymous
+	return f.Anonymous ||
+		strings.Contains(f.Tag.Get(GORM_DEFAULT_TAG_NAME), GORM_EMBEDDED_DEFAULT_TAG_VALUE)
+}
+
+func FieldHasEmbeddedPrefix(f reflect.StructField) bool {
+	return strings.Contains(f.Tag.Get(GORM_DEFAULT_TAG_NAME), GORM_EMBEDDED_PREFIX_DEFAULT_TAG_VALUE)
 }
 
 func IsPkField(f reflect.StructField) bool {
-	return f.Tag.Get(GORM_PK_DEFAULT_TAG_NAME) == GORM_PK_DEFAULT_TAG_VALUE || f.Name == GORM_PK_DEFAULT_NAME
+	return f.Tag.Get(GORM_DEFAULT_TAG_NAME) == GORM_PK_DEFAULT_TAG_VALUE || f.Name == GORM_PK_DEFAULT_NAME
+}
+
+func AddEmbeddedPrefixToField(f *reflect.StructField) {
+	re := regexp.MustCompile(fmt.Sprintf(`%s:([^";]+)`, GORM_EMBEDDED_PREFIX_DEFAULT_TAG_VALUE))
+	matches := re.FindStringSubmatch(f.Tag.Get(GORM_DEFAULT_TAG_NAME))
+	if len(matches) > 1 {
+		f.Name = matches[1]
+	}
 }
 
 func GetHtmlInputType(f reflect.StructField) string {
@@ -84,6 +101,10 @@ func GetObjectFields(objectType reflect.Type) []reflect.StructField {
 	for i := 0; i < objectType.NumField(); i++ {
 		fieldType := objectType.Field(i)
 
+		// if FieldHasEmbeddedPrefix(fieldType) {
+		// 	AddEmbeddedPrefixToField(&fieldType)
+		// }
+
 		if FieldHasEmbeddedStructs(fieldType) {
 			embeddedFields := GetObjectFields(fieldType.Type)
 			objectFields = append(objectFields, embeddedFields...)
@@ -94,14 +115,6 @@ func GetObjectFields(objectType reflect.Type) []reflect.StructField {
 
 	return objectFields
 }
-
-// func GetTypesNames(objectsTypes *[]reflect.Type) []string {
-// 	var names []string
-// 	for _, objectType := range *objectsTypes {
-// 		names = append(names, objectType.Name())
-// 	}
-// 	return names
-// }
 
 func GetObjectInstanceFromBytes(data []byte, typ reflect.Type) (interface{}, error) {
 	instancePtr := reflect.New(typ).Interface() // Create a new pointer to a type instance

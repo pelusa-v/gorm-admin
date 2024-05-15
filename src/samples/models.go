@@ -22,3 +22,20 @@ type Car struct {
 	Number     string
 	Passengers int
 }
+
+type Hint struct {
+	Test string
+}
+
+type Author struct {
+	Name  string
+	Email string
+	// Hint  Hint `gorm:"embedded;embeddedPrefix:hint_"`
+	Hint Hint `gorm:"embedded"`
+}
+
+type Blog struct {
+	ID      int
+	Author  Author `gorm:"embedded"`
+	Upvotes int32
+}

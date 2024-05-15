@@ -16,6 +16,7 @@ func main() {
 	admin.RegisterModel(samples.User{})
 	admin.RegisterModel(samples.Product{})
 	admin.RegisterModel(samples.Car{})
+	admin.RegisterModel(samples.Blog{})
 
 	// db := samples.NewDbInstance()
 	// samples.TestListHandler(db)
