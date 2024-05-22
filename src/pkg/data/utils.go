@@ -37,6 +37,15 @@ func IsPkField(f reflect.StructField) bool {
 	return f.Tag.Get(GORM_DEFAULT_TAG_NAME) == GORM_PK_DEFAULT_TAG_VALUE || f.Name == GORM_PK_DEFAULT_NAME
 }
 
+func IsVirtualField(f reflect.StructField, allTypes *[]reflect.Type) bool {
+	for _, t := range *allTypes {
+		if f.Name == t.Name() {
+			return true
+		}
+	}
+	return false
+}
+
 func AddEmbeddedPrefixToField(f *reflect.StructField) {
 	re := regexp.MustCompile(fmt.Sprintf(`%s:([^";]+)`, GORM_EMBEDDED_PREFIX_DEFAULT_TAG_VALUE))
 	matches := re.FindStringSubmatch(f.Tag.Get(GORM_DEFAULT_TAG_NAME))
@@ -72,7 +81,7 @@ func FindPkField(fields []reflect.StructField) reflect.StructField {
 	panic("Gorm model doesn't have PK")
 }
 
-func GetObjectFieldsValues(objectValue reflect.Value) []reflect.Value {
+func GetObjectFieldsValues(objectValue reflect.Value, allTypes *[]reflect.Type) []reflect.Value {
 	if objectValue.Kind() == reflect.Ptr {
 		objectValue = objectValue.Elem()
 	}
@@ -84,8 +93,12 @@ func GetObjectFieldsValues(objectValue reflect.Value) []reflect.Value {
 		fieldType := objectType.Field(i)
 		fieldValue := objectValue.Field(i)
 
+		if IsVirtualField(fieldType, allTypes) {
+			continue
+		}
+
 		if FieldHasEmbeddedStructs(fieldType) {
-			embeddedFieldsValues := GetObjectFieldsValues(fieldValue)
+			embeddedFieldsValues := GetObjectFieldsValues(fieldValue, allTypes)
 			objectFieldsValues = append(objectFieldsValues, embeddedFieldsValues...)
 		} else {
 			objectFieldsValues = append(objectFieldsValues, fieldValue)
@@ -95,7 +108,7 @@ func GetObjectFieldsValues(objectValue reflect.Value) []reflect.Value {
 	return objectFieldsValues
 }
 
-func GetObjectFields(objectType reflect.Type) []reflect.StructField {
+func GetObjectFields(objectType reflect.Type, allTypes *[]reflect.Type) []reflect.StructField {
 	var objectFields []reflect.StructField
 
 	for i := 0; i < objectType.NumField(); i++ {
@@ -105,8 +118,12 @@ func GetObjectFields(objectType reflect.Type) []reflect.StructField {
 		// 	AddEmbeddedPrefixToField(&fieldType)
 		// }
 
+		if IsVirtualField(fieldType, allTypes) {
+			continue
+		}
+
 		if FieldHasEmbeddedStructs(fieldType) {
-			embeddedFields := GetObjectFields(fieldType.Type)
+			embeddedFields := GetObjectFields(fieldType.Type, allTypes)
 			objectFields = append(objectFields, embeddedFields...)
 		} else {
 			objectFields = append(objectFields, fieldType)

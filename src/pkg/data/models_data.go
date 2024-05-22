@@ -20,14 +20,14 @@ type ModelObject struct {
 	TypeName     string
 }
 
-func MapModelObject(o interface{}) ModelObject {
+func MapModelObject(o interface{}, allTypes *[]reflect.Type) ModelObject {
 	objectValue := reflect.ValueOf(o)
 	if objectValue.Kind() == reflect.Ptr {
 		objectValue = objectValue.Elem()
 	}
 
-	objectFields := GetObjectFields(objectValue.Type())
-	objectFieldsValues := GetObjectFieldsValues(objectValue)
+	objectFields := GetObjectFields(objectValue.Type(), allTypes)
+	objectFieldsValues := GetObjectFieldsValues(objectValue, allTypes)
 	pkField := FindPkField(objectFields)
 
 	return ModelObject{

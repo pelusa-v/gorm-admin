@@ -1,5 +1,7 @@
 package data
 
+import "reflect"
+
 type FormData struct {
 	SimpleInputs []SimpleInput
 	SelectInputs []SelectInput
@@ -24,8 +26,8 @@ type SelectInputOption struct {
 	Value string
 }
 
-func (form *FormData) SetFormInputs(model *DbModel) {
-	fields := GetObjectFields(model.modelType)
+func (form *FormData) SetFormInputs(model *DbModel, allTypes *[]reflect.Type) {
+	fields := GetObjectFields(model.modelType, allTypes)
 	for _, f := range fields {
 		input := SimpleInput{}
 		input.Id = f.Name

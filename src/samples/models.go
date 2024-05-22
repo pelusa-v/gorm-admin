@@ -39,3 +39,15 @@ type Blog struct {
 	Author  Author `gorm:"embedded"`
 	Upvotes int32
 }
+
+type Employee struct {
+	gorm.Model
+	Name      string
+	CompanyID int
+	Company   Company
+}
+
+type Company struct {
+	ID   int
+	Name string
+}

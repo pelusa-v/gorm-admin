@@ -48,7 +48,7 @@ func (manager *TemplateManager) GetHomePageData() HomePageData {
 
 func (manager *TemplateManager) GetModelDetailPageData(model DbModel) ModelDetailPageData {
 	modelType := model.modelType
-	modelFields := GetObjectFields(modelType)
+	modelFields := GetObjectFields(modelType, manager.configurableData.Models)
 	data := ModelDetailPageData{Model: modelType.Name(), ModelObjectsFields: modelFields, PreviousURL: "/admin",
 		AddURL: fmt.Sprintf("/admin/%s/actions/create", model.modelType.Name())}
 	data.Models = manager.GetSidebarModels()
@@ -58,7 +58,7 @@ func (manager *TemplateManager) GetModelDetailPageData(model DbModel) ModelDetai
 	objects := model.ListObjects()
 	for _, o := range objects {
 		modelObjectListItem := ModelObjectListItem{}
-		modelObject := MapModelObject(o)
+		modelObject := MapModelObject(o, manager.configurableData.Models)
 		modelObjectListItem.ModelObject = modelObject
 		modelObjectListItem.DetailURL = fmt.Sprintf("/admin/%s/%v", modelObject.TypeName, modelObject.Pk)
 		modelObjectListItem.DeleteURL = fmt.Sprintf("/admin/%s/actions/delete/%v", modelObject.TypeName, modelObject.Pk)
@@ -77,7 +77,7 @@ func (manager *TemplateManager) GetModelDetailPageData(model DbModel) ModelDetai
 
 func (manager *TemplateManager) GetModelObjectDetailPageData(model DbModel, pk string) ModelObjectDetailPageData {
 	object := model.GetObject(pk)
-	data := ModelObjectDetailPageData{Model: model.modelType.Name(), ModelObject: MapModelObject(object),
+	data := ModelObjectDetailPageData{Model: model.modelType.Name(), ModelObject: MapModelObject(object, manager.configurableData.Models),
 		PreviousURL: fmt.Sprintf("/admin/%s", model.modelType.Name())}
 	data.Models = manager.GetSidebarModels()
 	data.AdminName = manager.GetSidebarName()
@@ -89,7 +89,7 @@ func (manager *TemplateManager) GetModelObjectCreatePageData(model DbModel) Mode
 		SimpleInputs: make([]SimpleInput, 0),
 		SelectInputs: make([]SelectInput, 0),
 	}
-	templateForm.SetFormInputs(&model)
+	templateForm.SetFormInputs(&model, manager.configurableData.Models)
 
 	data := ModelObjectCreatePageData{Model: model.modelType.Name(), PreviousURL: fmt.Sprintf("/admin/%s", model.modelType.Name()),
 		CreateObjectURL: fmt.Sprintf("/admin/%s/actions/create", model.modelType.Name()), CreateObjectForm: *templateForm,
