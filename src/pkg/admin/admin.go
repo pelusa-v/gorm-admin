@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"reflect"
 
+	"github.com/gin-gonic/gin"
 	"github.com/gofiber/fiber/v2"
 	"github.com/pelusa-v/gorm-admin/src/pkg/handlers"
 	"gorm.io/gorm"
@@ -35,7 +36,7 @@ func NewFiberAdmin(app *fiber.App, db *gorm.DB) *Admin {
 	return admin
 }
 
-func NewGinAdmin(app *string, db *gorm.DB) *Admin {
+func NewGinAdmin(app *gin.Engine, db *gorm.DB) *Admin {
 	handler := &handlers.GinHandler{
 		App:         app,
 		BaseHandler: handlers.BaseHandler{},
