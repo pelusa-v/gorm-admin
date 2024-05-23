@@ -19,6 +19,12 @@ func main() {
 	admin.RegisterModel(samples.Blog{})
 	admin.RegisterModel(samples.Employee{})
 	admin.RegisterModel(samples.Company{})
+	admin.RegisterModel(samples.Person{})
+	admin.RegisterModel(samples.CreditCard{})
+	admin.RegisterModel(samples.Person1{})
+	admin.RegisterModel(samples.CreditCard1{})
+	// admin.RegisterModel(samples.Person2{})
+	// admin.RegisterModel(samples.CreditCard2{})
 
 	// db := samples.NewDbInstance()
 	// samples.TestListHandler(db)

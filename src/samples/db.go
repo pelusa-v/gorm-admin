@@ -15,7 +15,8 @@ func NewDbInstance() *gorm.DB {
 		return nil
 	}
 
-	db.AutoMigrate(&User{}, &Product{}, &Car{}, &Blog{}, &Employee{}, &Company{})
+	db.AutoMigrate(&User{}, &Product{}, &Car{}, &Blog{}, &Employee{}, &Company{}, &Person{}, &CreditCard{},
+		&Person1{}, &CreditCard1{})
 	return db
 }
 

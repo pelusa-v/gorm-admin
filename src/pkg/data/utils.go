@@ -39,7 +39,7 @@ func IsPkField(f reflect.StructField) bool {
 
 func IsVirtualField(f reflect.StructField, allTypes *[]reflect.Type) bool {
 	for _, t := range *allTypes {
-		if f.Name == t.Name() {
+		if f.Type.Name() == t.Name() {
 			return true
 		}
 	}

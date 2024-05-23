@@ -40,6 +40,7 @@ type Blog struct {
 	Upvotes int32
 }
 
+// Belongs to relation
 type Employee struct {
 	gorm.Model
 	Name      string
@@ -50,4 +51,28 @@ type Employee struct {
 type Company struct {
 	ID   int
 	Name string
+}
+
+// Has one relation
+type Person struct {
+	gorm.Model
+	CreditCard CreditCard
+}
+
+type CreditCard struct {
+	gorm.Model
+	Number   string
+	PersonID uint
+}
+
+type Person1 struct {
+	gorm.Model
+	Name        string
+	CreditCard1 CreditCard1 `gorm:"foreignKey:Person1Name"`
+}
+
+type CreditCard1 struct {
+	gorm.Model
+	Number      string
+	Person1Name string
 }
