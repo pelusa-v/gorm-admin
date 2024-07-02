@@ -76,3 +76,15 @@ type CreditCard1 struct {
 	Number      string
 	Person1Name string
 }
+
+// Has many relation
+type BeastType struct {
+	gorm.Model
+	Beasts []Beast
+}
+
+type Beast struct {
+	gorm.Model
+	Number      string
+	BeastTypeID uint
+}

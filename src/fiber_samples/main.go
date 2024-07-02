@@ -23,6 +23,8 @@ func main() {
 	admin.RegisterModel(samples.CreditCard{})
 	admin.RegisterModel(samples.Person1{})
 	admin.RegisterModel(samples.CreditCard1{})
+	admin.RegisterModel(samples.Beast{})
+	admin.RegisterModel(samples.BeastType{})
 	// admin.RegisterModel(samples.Person2{})
 	// admin.RegisterModel(samples.CreditCard2{})
 
