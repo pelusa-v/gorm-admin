@@ -62,6 +62,7 @@ func (manager *TemplateManager) GetModelDetailPageData(model DbModel) ModelDetai
 		modelObjectListItem.ModelObject = modelObject
 		modelObjectListItem.DetailURL = fmt.Sprintf("/admin/%s/%v", modelObject.TypeName, modelObject.Pk)
 		modelObjectListItem.DeleteURL = fmt.Sprintf("/admin/%s/actions/delete/%v", modelObject.TypeName, modelObject.Pk)
+		modelObjectListItem.UpdateURL = fmt.Sprintf("/admin/%s/actions/update/%v", modelObject.TypeName, modelObject.Pk)
 		modelObjectListItem.DeleteObjectModalData = DeleteObjectModalData{
 			ModalId:        fmt.Sprintf("delete-modal-%v", modelObject.Pk),
 			CloseModalId:   fmt.Sprintf("close-delete-modal-%v", modelObject.Pk),
@@ -98,3 +99,6 @@ func (manager *TemplateManager) GetModelObjectCreatePageData(model DbModel) Mode
 	data.AdminName = manager.GetSidebarName()
 	return data
 }
+
+// func (manager *TemplateManager) GetModelObjectUpdatePageData(model DbModel) ModelObjectCreatePageData {
+// }

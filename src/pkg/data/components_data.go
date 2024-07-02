@@ -9,6 +9,7 @@ type ModelObjectListItem struct {
 	ModelObject           ModelObject
 	DetailURL             string
 	DeleteURL             string
+	UpdateURL             string
 	DeleteObjectModalData DeleteObjectModalData
 }
 

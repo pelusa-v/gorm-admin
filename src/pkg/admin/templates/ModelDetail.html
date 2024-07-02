@@ -22,7 +22,7 @@
                 {{range .ModelObjectListItems}}
                     <tr>
                         <td><a id="{{ .ModelObject.Pk}}-detail" href="{{ .DetailURL}}">Go</a></td>
-                        <td><a id="{{ .ModelObject.Pk}}-update" href="{{ .DetailURL}}">Edit</a></td>
+                        <td><a id="{{ .ModelObject.Pk}}-update" href="{{ .UpdateURL}}">Edit</a></td>
                         <!-- <td><a id="{{ .ModelObject.Pk}}-delete" href="#">Delete</a></td> -->
                         <td><span id="{{.DeleteObjectModalData.OpenModalId}}"><a href="#">Delete</a></span></td>
                         {{range .ModelObject.FieldsValues}}

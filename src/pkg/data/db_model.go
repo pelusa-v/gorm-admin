@@ -52,6 +52,11 @@ func (m *DbModel) CreateObject(newObject interface{}, objectType reflect.Type) e
 	return res.Error
 }
 
+func (m *DbModel) UpdateObject(newObject interface{}) error {
+	res := m.db.Save(newObject)
+	return res.Error
+}
+
 func (m *DbModel) DeleteObject(pk interface{}) error {
 	concreteObject := reflect.New(m.modelType).Interface()
 	res := m.db.Delete(concreteObject, pk)

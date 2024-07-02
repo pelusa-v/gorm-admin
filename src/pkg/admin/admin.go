@@ -73,7 +73,9 @@ func (admin *Admin) RegisterModel(model any) {
 	admin.registerModelDetailPage(modelType)
 	admin.registerModelObjectDetailPage(modelType)
 	admin.registerModelObjectCreatePage(modelType)
+	admin.registerModelObjectUpdatePage(modelType)
 	admin.registerModelObjectCreateEndpoint(modelType)
+	admin.registerModelObjectUpdateEndpoint(modelType)
 	admin.registerModelObjectDeleteEndpoint(modelType)
 }
 

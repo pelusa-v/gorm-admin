@@ -61,6 +61,26 @@ func (admin *Admin) registerModelObjectCreateEndpoint(modelType reflect.Type) {
 	})
 }
 
+func (admin *Admin) registerModelObjectUpdatePage(modelType reflect.Type) {
+	dbModel := data.NewDbModel(modelType, admin.GormDB)
+	templates := admin.template("templates/*.html")
+	templateManager := data.NewTemplateManager(&admin.Name, &admin.Models)
+	modelObjectUpdatePageRoute := fmt.Sprintf("/admin/%s/actions/update/:pk", modelType.Name())
+
+	admin.Handler.RegisterPkPage(templates, "ModelObjectCreate.html", modelObjectUpdatePageRoute, func(pk string) any {
+		return templateManager.GetModelObjectCreatePageData(*dbModel)
+		// return templateManager.GetModelObjectCreatePageData(*dbModel, pk) // TODO
+	})
+}
+
+func (admin *Admin) registerModelObjectUpdateEndpoint(modelType reflect.Type) {
+	dbModel := data.NewDbModel(modelType, admin.GormDB)
+	modelObjectUpdateRoute := fmt.Sprintf("/admin/%s/actions/update", modelType.Name())
+	admin.Handler.RegisterCreateEndpoint(modelObjectUpdateRoute, func(data interface{}) error {
+		return dbModel.UpdateObject(data)
+	})
+}
+
 func (admin *Admin) registerModelObjectDeleteEndpoint(modelType reflect.Type) {
 	dbModel := data.NewDbModel(modelType, admin.GormDB)
 	modelObjectDeleteRoute := fmt.Sprintf("/admin/%s/actions/delete/:pk", modelType.Name())
