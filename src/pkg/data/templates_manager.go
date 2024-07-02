@@ -93,12 +93,26 @@ func (manager *TemplateManager) GetModelObjectCreatePageData(model DbModel) Mode
 	templateForm.SetFormInputs(&model, manager.configurableData.Models)
 
 	data := ModelObjectCreatePageData{Model: model.modelType.Name(), PreviousURL: fmt.Sprintf("/admin/%s", model.modelType.Name()),
-		CreateObjectURL: fmt.Sprintf("/admin/%s/actions/create", model.modelType.Name()), CreateObjectForm: *templateForm,
+		SubmitObjectURL: fmt.Sprintf("/admin/%s/actions/create", model.modelType.Name()), SubmitObjectForm: *templateForm,
 		RedirectAfterCreateURL: fmt.Sprintf("/admin/%s", model.modelType.Name())}
 	data.Models = manager.GetSidebarModels()
 	data.AdminName = manager.GetSidebarName()
 	return data
 }
 
-// func (manager *TemplateManager) GetModelObjectUpdatePageData(model DbModel) ModelObjectCreatePageData {
-// }
+func (manager *TemplateManager) GetModelObjectUpdatePageData(model DbModel, pk string) ModelObjectCreatePageData {
+	templateForm := &FormData{
+		SimpleInputs: make([]SimpleInput, 0),
+		SelectInputs: make([]SelectInput, 0),
+	}
+	// templateForm.SetFormInputs(&model, manager.configurableData.Models)
+	object := model.GetObject(pk)
+	templateForm.SetFormInputsValues(&model, manager.configurableData.Models, object) // TODO
+
+	data := ModelObjectCreatePageData{Model: model.modelType.Name(), PreviousURL: fmt.Sprintf("/admin/%s", model.modelType.Name()),
+		SubmitObjectURL: fmt.Sprintf("/admin/%s/actions/update", model.modelType.Name()), SubmitObjectForm: *templateForm,
+		RedirectAfterCreateURL: fmt.Sprintf("/admin/%s", model.modelType.Name())}
+	data.Models = manager.GetSidebarModels()
+	data.AdminName = manager.GetSidebarName()
+	return data
+}

@@ -10,17 +10,17 @@
         <div class="form-container">
             <form class="create-form" id="createForm">
                 <h3>Create new <strong>{{.Model}}</strong></h3>
-                {{range .CreateObjectForm.SimpleInputs}}
+                {{range .SubmitObjectForm.SimpleInputs}}
                     <div class="input-group">
                         <label for="{{.Label}}">{{.Label}}</label>
                         {{if .Disabled}}
-                            <input type="{{.Type}}" id="{{.Id}}" name="{{.Name}}" required disabled>
+                            <input type="{{.Type}}" id="{{.Id}}" name="{{.Name}}" value="{{.Value}}" required disabled>
                         {{else}}
-                            <input type="{{.Type}}" id="{{.Id}}" name="{{.Name}}" required>
+                            <input type="{{.Type}}" id="{{.Id}}" name="{{.Name}}" value="{{.Value}}" required>
                         {{end}}
                     </div>
                 {{end}}
-                {{range .CreateObjectForm.SelectInputs}}
+                {{range .SubmitObjectForm.SelectInputs}}
                     <div class="input-group">
                         <label for="name">Name:</label>
                         <input type="text" id="name" name="name" required>
@@ -42,7 +42,7 @@
         e.preventDefault();
 
         let object = {}
-        "{{range .CreateObjectForm.SimpleInputs}}"
+        "{{range .SubmitObjectForm.SimpleInputs}}"
         objectField = document.getElementById("{{.Id}}")
         
         if(objectField.type === "number") {
@@ -54,7 +54,7 @@
 
         console.log(object)
 
-        fetch('{{ .CreateObjectURL}}', {
+        fetch('{{ .SubmitObjectURL}}', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

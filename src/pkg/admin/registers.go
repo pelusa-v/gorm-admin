@@ -68,8 +68,7 @@ func (admin *Admin) registerModelObjectUpdatePage(modelType reflect.Type) {
 	modelObjectUpdatePageRoute := fmt.Sprintf("/admin/%s/actions/update/:pk", modelType.Name())
 
 	admin.Handler.RegisterPkPage(templates, "ModelObjectCreate.html", modelObjectUpdatePageRoute, func(pk string) any {
-		return templateManager.GetModelObjectCreatePageData(*dbModel)
-		// return templateManager.GetModelObjectCreatePageData(*dbModel, pk) // TODO
+		return templateManager.GetModelObjectUpdatePageData(*dbModel, pk)
 	})
 }
 
@@ -77,7 +76,7 @@ func (admin *Admin) registerModelObjectUpdateEndpoint(modelType reflect.Type) {
 	dbModel := data.NewDbModel(modelType, admin.GormDB)
 	modelObjectUpdateRoute := fmt.Sprintf("/admin/%s/actions/update", modelType.Name())
 	admin.Handler.RegisterCreateEndpoint(modelObjectUpdateRoute, func(data interface{}) error {
-		return dbModel.UpdateObject(data)
+		return dbModel.UpdateObject(data, modelType)
 	})
 }
 

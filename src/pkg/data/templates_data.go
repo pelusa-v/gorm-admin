@@ -26,7 +26,7 @@ type ModelObjectCreatePageData struct {
 	SideBarData
 	Model                  string
 	PreviousURL            string
-	CreateObjectForm       FormData
-	CreateObjectURL        string
+	SubmitObjectForm       FormData
+	SubmitObjectURL        string
 	RedirectAfterCreateURL string
 }

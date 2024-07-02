@@ -52,8 +52,8 @@ func (m *DbModel) CreateObject(newObject interface{}, objectType reflect.Type) e
 	return res.Error
 }
 
-func (m *DbModel) UpdateObject(newObject interface{}) error {
-	res := m.db.Save(newObject)
+func (m *DbModel) UpdateObject(newObject interface{}, objectType reflect.Type) error { // TODO: Update object based on map
+	res := m.db.Model(reflect.New(objectType).Interface()).Updates(newObject)
 	return res.Error
 }
 
