@@ -1,6 +1,6 @@
 # Add an admin page to your web application!
 
-Gorm-admin is a Go package that adds an admin page to your web application. It works with GORM as the ORM and is compatible with Fiber, Gin, and HTTP. The package uses reflection to integrate ORM functionalities across different frameworks and a virtual filesystem to store all admin pages, as well as techniques to ensure compatibility between frameworks.
+Gorm-admin is a Go package that adds an admin page to your web application. It works with GORM as the ORM and is compatible with Fiber, Gin, and HTTP. The package uses reflection to integrate ORM functionalities across different frameworks and a virtual filesystem to store all admin pages
 
 Feel free to contribute and improve the code! :)
 
@@ -23,9 +23,13 @@ func main() {
 	app := fiber.New()
 	db := NewDbInstance() // *gorm.DB
 
-	admin := admin.NewFiberAdmin(app, db) // use NewGinAdmin() for Gin, NewAdmin() for built-in http
+    // Add admin to web application
+    // use NewGinAdmin() for Gin, NewAdmin() for built-in http
+	admin := admin.NewFiberAdmin(app, db)
 	admin.Register()
 	admin.Configure("My awesome project")
+
+    // Register your models to admin page
 	admin.RegisterModel(User{})
 	admin.RegisterModel(Product{})
 
