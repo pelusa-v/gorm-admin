@@ -59,7 +59,8 @@ func (handler *FiberHandler) RegisterCreateEndpoint(route string, actionFunc fun
 				"error": "Cannot parse JSON",
 			})
 		}
-		fmt.Println(dataToCreate)
+		// fmt.Println(dataToCreate)
+		// fmt.Println("WATCH HEREEE FOOL")
 
 		err = actionFunc(dataToCreate)
 		if err != nil {

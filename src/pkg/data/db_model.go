@@ -42,18 +42,18 @@ func (m *DbModel) GetObject(pk string) interface{} {
 	return concreteObject
 }
 
-// func (m *DbModel) CreateObject(newObject interface{}) error {
-// 	res := m.db.Create(newObject)
-// 	return res.Error
-// }
-
 func (m *DbModel) CreateObject(newObject interface{}, objectType reflect.Type) error {
 	res := m.db.Model(reflect.New(objectType).Interface()).Create(newObject)
 	return res.Error
 }
 
 func (m *DbModel) UpdateObject(newObject interface{}, objectType reflect.Type) error { // TODO: Update object based on map
-	res := m.db.Model(reflect.New(objectType).Interface()).Updates(newObject)
+	parsedObject := reflect.New(objectType).Elem()
+	populateStruct(parsedObject, newObject.(map[string]interface{}))
+	parsedObjectInterface := parsedObject.Interface()
+
+	// res := m.db.Model(reflect.New(objectType).Interface()).Updates(newObject)
+	res := m.db.Save(parsedObjectInterface)
 	return res.Error
 }
 

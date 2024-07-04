@@ -170,3 +170,18 @@ func GetObjectInstanceFromBytes(data []byte) (interface{}, error) {
 
 	return instanceData, nil
 }
+
+// populateStruct populates the fields of a struct with values from a map.
+func populateStruct(v reflect.Value, data map[string]interface{}) {
+	for key, value := range data {
+		field := v.FieldByName(key)
+		if field.IsValid() && field.CanSet() {
+			val := reflect.ValueOf(value)
+			if val.Type().AssignableTo(field.Type()) {
+				field.Set(val)
+			} else if val.Type().ConvertibleTo(field.Type()) {
+				field.Set(val.Convert(field.Type()))
+			}
+		}
+	}
+}
