@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/pelusa-v/gorm-admin/src/pkg/admin"
-	"github.com/pelusa-v/gorm-admin/src/samples"
+	"github.com/pelusa-v/gorm-admin/pkg/admin"
+	"github.com/pelusa-v/gorm-admin/samples"
 )
 
 func main() {

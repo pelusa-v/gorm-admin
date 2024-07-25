@@ -9,7 +9,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
-	"github.com/pelusa-v/gorm-admin/src/pkg/data"
+	"github.com/pelusa-v/gorm-admin/pkg/data"
 )
 
 type FiberHandler struct {
