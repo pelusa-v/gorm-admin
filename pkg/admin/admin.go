@@ -7,7 +7,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/gofiber/fiber/v2"
-	"github.com/pelusa-v/gorm-admin/src/pkg/handlers"
+	"github.com/pelusa-v/gorm-admin/pkg/handlers"
 	"gorm.io/gorm"
 )
 

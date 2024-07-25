@@ -5,7 +5,7 @@ import (
 	"io/fs"
 	"reflect"
 
-	"github.com/pelusa-v/gorm-admin/src/pkg/data"
+	"github.com/pelusa-v/gorm-admin/pkg/data"
 )
 
 func (admin *Admin) registerHomePage() {
