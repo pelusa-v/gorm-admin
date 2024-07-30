@@ -1,12 +1,12 @@
 # Add an admin page to your web application!
 
-Gorm-admin is a Go package that adds an admin page to your web application. It works with GORM as the ORM and is compatible with Fiber, Gin, and HTTP. The package uses reflection to integrate ORM functionalities across different frameworks and a virtual filesystem to store all admin pages
+Gorm-admin is a Go package that adds an admin page to your web application. It works with GORM as the ORM and is compatible with Fiber (with Gin and HTTP compatibility coming soon). The package uses reflection to integrate ORM functionalities across different frameworks and a virtual filesystem to store all admin pages
 
 Feel free to contribute and improve the code! :)
 
 ## Installation:
 ```
-go get github.com/pelusa-v/gorm-admin
+go get github.com/pelusa-v/gorm-admin/src/pkg/admin
 ```
 
 ## Usage:
